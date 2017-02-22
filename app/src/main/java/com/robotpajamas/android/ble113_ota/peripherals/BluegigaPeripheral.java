@@ -29,7 +29,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 //    private static final UUID CHARACTERISTIC_DATA_ACK = UUID.fromString("00737572-6573-686a-6f73-68692e636f6d");
 
     private static final UUID CHARACTERISTIC_CONTROL_NO_ACK = UUID.fromString("F7BF3564-FB6D-4E53-88A4-5E37E0326063");
-    private static final UUID CHARACTERISTIC_DATA_ACK = UUID.fromString("984227F3-34FC-4045-A5D0-2C581F81A153");
+    private static final UUID CHARACTERISTIC_DATA_NO_ACK = UUID.fromString("984227F3-34FC-4045-A5D0-2C581F81A153");
 
     private static final int PACKET_SIZE = 16;
 
@@ -60,7 +60,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
             mPeripheral.writeCharacteristic(data, CHARACTERISTIC_CONTROL_NO_ACK, SERVICE_OTA, response -> mOnFirmwareUpdateCompleteListener.call());
 
             mOtaSource = Okio.buffer(Okio.source(otaFile));
-            BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_DATA_ACK, SERVICE_OTA, mPeripheral, response -> {
+            BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, mPeripheral, response -> {
                 mOnFirmwarePacketUploadedListener.call();
                 mHandler.postDelayed(uploadNextPacket, 50);
             });
@@ -82,7 +82,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
                     mPeripheral.writeCharacteristic(data, CHARACTERISTIC_CONTROL_NO_ACK, SERVICE_OTA, response -> mOnFirmwareUpdateCompleteListener.call());
                 } else {
                     data = mOtaSource.readByteArray(PACKET_SIZE);
-                    mPeripheral.writeCharacteristic(data, CHARACTERISTIC_DATA_ACK, SERVICE_OTA, response -> {
+                    mPeripheral.writeCharacteristic(data, CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, response -> {
                         mOnFirmwarePacketUploadedListener.call();
                         mHandler.postDelayed(uploadNextPacket, 50);
                     });
