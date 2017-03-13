@@ -31,7 +31,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
     private static final UUID CHARACTERISTIC_CONTROL_NO_ACK = UUID.fromString("F7BF3564-FB6D-4E53-88A4-5E37E0326063");
     private static final UUID CHARACTERISTIC_DATA_NO_ACK = UUID.fromString("984227F3-34FC-4045-A5D0-2C581F81A153");
 
-    private static final int PACKET_SIZE = 16;
+    private static final int PACKET_SIZE = 20;
 
 
     Handler mHandler = new Handler(Looper.getMainLooper());
@@ -52,7 +52,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
         mOnFirmwarePacketUploadedListener = onFirmwarePacketUploadedListener;
         mOnFirmwareUpdateCompleteListener = onFirmwareUpdateCompleteListener;
 
-        int totalNumberOfPackets = (int) (otaFile.length() / 16);
+        int totalNumberOfPackets = (int) (otaFile.length() / 20);
 
         try {
             byte[] data;
