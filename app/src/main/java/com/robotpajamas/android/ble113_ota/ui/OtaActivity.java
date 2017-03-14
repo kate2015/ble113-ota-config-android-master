@@ -39,7 +39,7 @@ public class OtaActivity extends Activity {
     void startFirmwareUpdate010() {
         mCurrentPacket = 0;
 
-        File otaFile = createTempFile(Okio.buffer(Okio.source(getResources().openRawResource(R.raw.ota_tb_fw_app_nita))));
+        File otaFile = createTempFile(Okio.buffer(Okio.source(getResources().openRawResource(R.raw.ota_tb_fw_app_nita2))));
         mTotalNumberOfPackets = mBluegigaPeripheral.updateFirmware(otaFile,
                 () -> {
                     Timber.d("Firmware packet uploaded. %d of %d", ++mCurrentPacket, mTotalNumberOfPackets);
