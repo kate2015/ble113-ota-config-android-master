@@ -62,7 +62,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
             mOtaSource = Okio.buffer(Okio.source(otaFile));
             BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, mPeripheral, response -> {
                 mOnFirmwarePacketUploadedListener.call();
-                mHandler.postDelayed(uploadNextPacket, 50);
+                mHandler.postDelayed(uploadNextPacket, 100);
             });
         } catch (java.io.IOException e) {
             e.printStackTrace();
@@ -84,7 +84,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
                     data = mOtaSource.readByteArray(PACKET_SIZE);
                     mPeripheral.writeCharacteristic(data, CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, response -> {
                         mOnFirmwarePacketUploadedListener.call();
-                        mHandler.postDelayed(uploadNextPacket, 50);
+                        mHandler.postDelayed(uploadNextPacket, 100);
                     });
                 }
             } catch (IOException e) {
