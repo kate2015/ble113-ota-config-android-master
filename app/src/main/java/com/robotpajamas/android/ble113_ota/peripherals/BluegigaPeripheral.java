@@ -54,16 +54,22 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 
         int totalNumberOfPackets = (int) (otaFile.length() / 20);
 
+
         try {
             byte[] data;
+            boolean sendDfu = mPeripheral.isConnected();
+
             data = new byte[]{0x00};
             mPeripheral.writeCharacteristic(data, CHARACTERISTIC_CONTROL_NO_ACK, SERVICE_OTA, response -> mOnFirmwareUpdateCompleteListener.call());
 
-            mOtaSource = Okio.buffer(Okio.source(otaFile));
-            BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, mPeripheral, response -> {
-                mOnFirmwarePacketUploadedListener.call();
-                mHandler.postDelayed(uploadNextPacket, 100);
-            });
+            if (sendDfu) {
+                mOtaSource = Okio.buffer(Okio.source(otaFile));
+                BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, mPeripheral, response -> {
+                    mOnFirmwarePacketUploadedListener.call();
+                    mHandler.postDelayed(uploadNextPacket, 50);
+                });
+            }
+
         } catch (java.io.IOException e) {
             e.printStackTrace();
         }
@@ -74,6 +80,8 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
     private Runnable uploadNextPacket = new Runnable() {
         @Override
         public void run() {
+            //byte[] dfu_data = new byte[PACKET_SIZE];
+
             try {
                 byte[] data;
                 boolean sendReset = mOtaSource.exhausted();
@@ -81,10 +89,11 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
                     data = new byte[]{0x03};
                     mPeripheral.writeCharacteristic(data, CHARACTERISTIC_CONTROL_NO_ACK, SERVICE_OTA, response -> mOnFirmwareUpdateCompleteListener.call());
                 } else {
+
                     data = mOtaSource.readByteArray(PACKET_SIZE);
                     mPeripheral.writeCharacteristic(data, CHARACTERISTIC_DATA_NO_ACK, SERVICE_OTA, response -> {
                         mOnFirmwarePacketUploadedListener.call();
-                        mHandler.postDelayed(uploadNextPacket, 100);
+                        mHandler.postDelayed(uploadNextPacket, 50);
                     });
                 }
             } catch (IOException e) {
