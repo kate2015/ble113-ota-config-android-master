@@ -8,7 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.robotpajamas.android.ble113_ota.R;
-import com.robotpajamas.blueteeth.BlueteethDevice;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +55,7 @@ public class DeviceScanListAdapter extends BaseAdapter {
         BlueteethDevice device = getItem(position);
         holder.deviceName.setText(device.getName());
         holder.deviceMac.setText(device.getMacAddress());
+        //holder.deviceSN.setText(device.getSN());
 
         return convertView;
     }
@@ -87,6 +88,9 @@ public class DeviceScanListAdapter extends BaseAdapter {
 
         @Bind(R.id.textview_device_mac)
         TextView deviceMac;
+
+        @Bind(R.id.textview_device_SN)
+        TextView deviceSN;
 
         public DeviceHolder(View view) {
             ButterKnife.bind(this, view);

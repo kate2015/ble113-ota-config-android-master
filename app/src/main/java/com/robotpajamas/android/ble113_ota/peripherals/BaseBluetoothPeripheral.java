@@ -1,10 +1,10 @@
 package com.robotpajamas.android.ble113_ota.peripherals;
 
-import com.robotpajamas.blueteeth.BlueteethDevice;
-import com.robotpajamas.blueteeth.BlueteethUtils;
-import com.robotpajamas.blueteeth.listeners.OnBondingChangedListener;
-import com.robotpajamas.blueteeth.listeners.OnCharacteristicReadListener;
-import com.robotpajamas.blueteeth.listeners.OnConnectionChangedListener;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
+import com.robotpajamas.android.ble113_ota.listeners.OnBondingChangedListener;
+import com.robotpajamas.android.ble113_ota.listeners.OnCharacteristicReadListener;
+import com.robotpajamas.android.ble113_ota.listeners.OnConnectionChangedListener;
 
 import java.util.UUID;
 
@@ -15,10 +15,12 @@ public class BaseBluetoothPeripheral {
 
     private static final UUID CHARACTERISTIC_MANUFACTURER_MODEL = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_SERIAL_NUMBER = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
-    private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("00002A26-0000-1000-8000-00805f9b34fb");
+    private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("6240cbea-6c84-4ace-b0a8-011447bb27e2");
+    //private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_HARDWARE_VERSION = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_SOFTWARE_VERSION = UUID.fromString("00002A28-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
+    //private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
 
     protected BlueteethDevice mPeripheral;
 
@@ -45,6 +47,7 @@ public class BaseBluetoothPeripheral {
     public String getMacAddress() {
         return mMacAddress;
     }
+
 
     /**
      * Determines if this peripheral is currently connected or not

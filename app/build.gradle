@@ -1,3 +1,4 @@
+
 buildscript {
     repositories {
         mavenCentral()
@@ -16,9 +17,10 @@ def versionMajor = 1
 def versionMinor = 1
 def versionPatch = 0
 
+
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '24.0.3'
 
     defaultConfig {
         applicationId "com.robotpajamas.android.ble113_ota"
@@ -51,6 +53,6 @@ dependencies {
 
     compile 'com.squareup.okio:okio:1.8.0'
 
-    compile 'com.robotpajamas.blueteeth:blueteeth:0.2.0'
+    //compile 'com.robotpajamas.blueteeth:blueteeth:0.2.0'
     compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }

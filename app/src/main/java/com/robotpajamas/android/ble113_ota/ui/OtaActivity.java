@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.robotpajamas.android.ble113_ota.R;
 import com.robotpajamas.android.ble113_ota.peripherals.BluegigaPeripheral;
-import com.robotpajamas.blueteeth.BlueteethManager;
-import com.robotpajamas.blueteeth.BlueteethResponse;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethResponse;
 
 import java.io.File;
 import java.io.IOException;

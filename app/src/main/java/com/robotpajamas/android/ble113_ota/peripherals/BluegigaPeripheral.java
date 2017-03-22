@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 
 import com.robotpajamas.android.ble113_ota.listeners.OnFirmwarePacketUploadedListener;
 import com.robotpajamas.android.ble113_ota.listeners.OnFirmwareUpdateCompleteListener;
-import com.robotpajamas.blueteeth.BlueteethDevice;
-import com.robotpajamas.blueteeth.BlueteethUtils;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 
 import java.io.File;
 import java.io.IOException;
