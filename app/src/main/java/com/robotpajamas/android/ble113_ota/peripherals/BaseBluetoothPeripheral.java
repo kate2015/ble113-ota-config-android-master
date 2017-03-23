@@ -15,12 +15,14 @@ public class BaseBluetoothPeripheral {
 
     private static final UUID CHARACTERISTIC_MANUFACTURER_MODEL = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_SERIAL_NUMBER = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
-    private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("6240cbea-6c84-4ace-b0a8-011447bb27e2");
-    //private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
+    private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("6240CBEA-6C84-4ACE-B0A8-011447BB27E2");
+    private static final UUID CHARACTERISTIC_MODEL_NAME = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
+
     private static final UUID CHARACTERISTIC_HARDWARE_VERSION = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_SOFTWARE_VERSION = UUID.fromString("00002A28-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
-    //private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
+    //private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("F202F081-50BC-497A-AC0E-A3410C972B63");
+    private final static String CHARACTERISTIC_TX_POWER = "00002901-0000-1000-8000-00805f9b34fb";
 
     protected BlueteethDevice mPeripheral;
 
@@ -99,6 +101,20 @@ public class BaseBluetoothPeripheral {
      */
     public void readFirmwareVersion(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_FIRMWARE_VERSION, SERVICE_DEVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
+     * Read the TX Power
+     */
+    public void readTXpower(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(UUID.fromString(CHARACTERISTIC_TX_POWER), SERVICE_DEVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
+    * Read the Model Name
+    * */
+    public void readModelName(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_MODEL_NAME, SERVICE_DEVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 }
 

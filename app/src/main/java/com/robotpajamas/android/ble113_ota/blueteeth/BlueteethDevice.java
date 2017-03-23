@@ -61,7 +61,7 @@ public class BlueteethDevice {
         return mMacAddress;
     }
 
-    //public String getSN() {return mSN; }
+    //public String getSN() {return mSN; } //Nita
 
     public int getRssi() {
         return mRssi;

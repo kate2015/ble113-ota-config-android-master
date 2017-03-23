@@ -25,6 +25,9 @@ import timber.log.Timber;
 
 public class OtaActivity extends Activity {
 
+    @Bind(R.id.textview_modelname)
+    TextView mModelnameTextview;
+
     @Bind(R.id.textview_firmware)
     TextView mFirmwareTextview;
 
@@ -93,6 +96,20 @@ public class OtaActivity extends Activity {
             }
             runOnUiThread(() -> mFirmwareTextview.setText(String.format(getString(R.string.firmware_version), ByteString.of(data, 0, data.length).utf8())));
         });
+
+        mBluegigaPeripheral.readTXpower((response, data) -> {
+            if (response != BlueteethResponse.NO_ERROR) {
+                return;
+            }
+            runOnUiThread(() -> mTXpower.setText(String.format("TX Power: %d", data.length)));
+        });
+
+        mBluegigaPeripheral.readModelName(((response, data) -> {
+            if (response !=BlueteethResponse.NO_ERROR) {
+                return;
+            }
+            runOnUiThread(() -> mModelnameTextview.setText(String.format("Model Name: %s", ByteString.of(data, 0, data.length).utf8())));
+        }));
     }
 
     @Override
@@ -102,4 +119,10 @@ public class OtaActivity extends Activity {
             mBluegigaPeripheral.disconnect(null);
         }
     }
+
+    @Bind(R.id.textview_txpower)
+    TextView mTXpower;
+
+
+
 }

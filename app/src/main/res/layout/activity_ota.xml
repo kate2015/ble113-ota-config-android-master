@@ -1,32 +1,48 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_nav_menu_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-
+    android:stretchColumns="0,1,2,3">
+<TableRow>
     <ProgressBar
         android:id="@+id/progressbar"
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-
+</TableRow>
+<TableRow>
+    <TextView
+        android:id="@+id/textview_modelname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Model Name: %s" />
+</TableRow>
+<TableRow>
     <TextView
         android:id="@+id/textview_firmware"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/firmware_version" />
-
+</TableRow>
+<TableRow>
     <Button
         android:id="@+id/button_upload_010"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_upload_010" />
-
+</TableRow>
+<TableRow>
     <Button
         android:id="@+id/button_upload_011"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_upload_011" />
-
-
-</LinearLayout>
+</TableRow>
+<TableRow>
+    <TextView
+        android:id="@+id/textview_txpower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TX Power: %d" />
+</TableRow>>
+</TableLayout>
