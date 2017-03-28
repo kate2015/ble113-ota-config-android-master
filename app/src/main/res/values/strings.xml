@@ -8,9 +8,14 @@
     <string name="button_upload_010">Upload Firmware ota_proj_1_app</string>
     <string name="button_upload_011">Upload Firmware ota_proj_2_app</string>
 
-    <string name="device_name">Device Name:</string>
-    <string name="firmware_version">Firmware Version: %s</string>
-
+    <string name="device_name">Device Name :</string>
+    <string name="firmware_version">Firmware Version : %s</string>
+    <string name="model_name">Model Name : %</string>
+    <string name="tx_power">TX Power : %s</string>
+    <string name="transmit_duration">Transmit Duration : %s</string>
+    <string name="WireAndPin">GPI Wire And Pin# : %s</string>
+    <string name="RecStopPin">GPI Rec Stop Pin# : %s</string>
+s
     <string name="swipe_to_start_scanning">Swipe to start scanning</string>
     <string name="extra_mac_address">com.robotpajamas.android.ble113_ota.mac_address</string>
 </resources>

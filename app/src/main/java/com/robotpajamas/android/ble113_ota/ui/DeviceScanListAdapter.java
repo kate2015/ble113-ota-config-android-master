@@ -89,11 +89,10 @@ public class DeviceScanListAdapter extends BaseAdapter {
         @Bind(R.id.textview_device_mac)
         TextView deviceMac;
 
-        @Bind(R.id.textview_device_SN)
-        TextView deviceSN;
+        /*@Bind(R.id.textview_device_SN)
+        TextView deviceSN;*/
 
         public DeviceHolder(View view) {
-            ButterKnife.bind(this, view);
-        }
+            ButterKnife.bind(this, view);}
     }
 }

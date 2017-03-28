@@ -1,48 +1,76 @@
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_nav_menu_layout"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:stretchColumns="0,1,2,3">
-<TableRow>
+    android:orientation="vertical">
+
     <ProgressBar
         android:id="@+id/progressbar"
         style="@android:style/Widget.Holo.ProgressBar.Horizontal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content" />
-</TableRow>
-<TableRow>
+
     <TextView
         android:id="@+id/textview_modelname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Model Name: %s" />
-</TableRow>
-<TableRow>
+        android:text="@string/model_name"/>
+
     <TextView
         android:id="@+id/textview_firmware"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/firmware_version" />
-</TableRow>
-<TableRow>
+
+    <TextView
+        android:id="@+id/textview_txpower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tx_power" />
+
+    <Spinner
+        android:id="@+id/txpower"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/textview_txpower"/>
+
+
+    <TextView
+        android:id="@+id/myTextViewB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="@string/transmit_duration" />
+
+    <Spinner
+        android:id="@+id/transmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/myTextViewB"/>
+
+    <TextView
+        android:id="@+id/textview_WireAndPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/WireAndPin"/>
+
+    <TextView
+        android:id="@+id/textview_RecStopPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/RecStopPin"/>
+
     <Button
         android:id="@+id/button_upload_010"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_upload_010" />
-</TableRow>
-<TableRow>
+
     <Button
         android:id="@+id/button_upload_011"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:text="@string/button_upload_011" />
-</TableRow>
-<TableRow>
-    <TextView
-        android:id="@+id/textview_txpower"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TX Power: %d" />
-</TableRow>>
-</TableLayout>
+
+
+
+</LinearLayout>
