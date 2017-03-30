@@ -102,6 +102,13 @@ public class BaseBluetoothPeripheral {
     }
 
     /**
+     * Read the Model Name
+     * */
+    public void readModelName(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_MODEL_NAME, SERVICE_DEVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
      * Reads the firmware version
      */
     public void readFirmwareVersion(OnCharacteristicReadListener onCharacteristicReadListener) {
@@ -115,18 +122,21 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_TX_POWER, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
-    /**
-    * Read the Model Name
-    * */
-    public void readModelName(OnCharacteristicReadListener onCharacteristicReadListener) {
-        BlueteethUtils.read(CHARACTERISTIC_MODEL_NAME, SERVICE_DEVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
-    }
+
 
     /**
      * Read Transmit Duration
     * */
     public void readTransmit(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_TRANSMITDURATION, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+
+    /**
+     * Read GPIN STOP CMD PINS
+     * */
+    public void readGPINstop(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
 }

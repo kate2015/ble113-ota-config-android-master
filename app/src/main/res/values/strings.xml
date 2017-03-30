@@ -15,6 +15,7 @@
     <string name="transmit_duration">Transmit Duration : %s</string>
     <string name="WireAndPin">GPI Wire And Pin# : %s</string>
     <string name="RecStopPin">GPI Rec Stop Pin# : %s</string>
+    <string name="connect"> Connect </string>
 s
     <string name="swipe_to_start_scanning">Swipe to start scanning</string>
     <string name="extra_mac_address">com.robotpajamas.android.ble113_ota.mac_address</string>

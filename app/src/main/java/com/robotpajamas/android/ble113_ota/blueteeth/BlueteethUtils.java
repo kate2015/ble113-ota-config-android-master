@@ -7,6 +7,8 @@ import com.robotpajamas.android.ble113_ota.listeners.OnCharacteristicWriteListen
 
 import java.util.UUID;
 
+import timber.log.Timber;
+
 // TODO: Handle error response from discovery
 // TODO: Handle null callback as a WRITE_NO_RESPONSE?
 public class BlueteethUtils {
@@ -45,14 +47,16 @@ public class BlueteethUtils {
      * @param readListener   Callback containing byte array from a successful read.
      */
     public static void read(@NonNull UUID characteristic, @NonNull UUID service, @NonNull BlueteethDevice device, @NonNull OnCharacteristicReadListener readListener) {
+        Timber.d("Nitaa : Attempting to read %s", service.toString());
         if (device.isConnected()) {
+            Timber.d("Nitaa : device connected");
             device.discoverServices(response -> device.readCharacteristic(characteristic, service, readListener));
         } else {
             device.connect(false, isConnected -> {
                 if (isConnected) {
                     device.discoverServices(response -> device.readCharacteristic(characteristic, service, readListener));
                 } else {
-                    readListener.call(BlueteethResponse.NOT_CONNECTED, new byte[0]);
+                    readListener.call(BlueteethResponse.NOT_CONNECTED, new byte[12]);
                 }
             });
         }
