@@ -46,6 +46,9 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_RecStopPin)
     TextView mRecStopPin;
 
+    @Bind(R.id.textview_GroupName)
+    TextView mGroupName;
+
     //@Bind(R.id.textview_transmit)
     //TextView mTransmit;
 
@@ -53,6 +56,7 @@ public class OtaActivity extends Activity {
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
 
+    /*/------
     @OnClick(R.id.Connect)
     void connect() {
         if (mIsConnected) {
@@ -153,6 +157,14 @@ public class OtaActivity extends Activity {
             }));
             //--------------//
 
+            //----- Read Group Name ------
+            mBluegigaPeripheral.readGroupName(((response, data) -> {
+                if (response !=BlueteethResponse.NO_ERROR) {
+                    return;
+                }
+                runOnUiThread(() -> mGroupName.setText(String.format(getString(R.string.group_name), ByteString.of(data, 0, data.length).utf8())));
+            }));
+
 
         } else {
             //updateReceivedData(String.format("Attempting to connect to  %s - %s...", mSamplePeripheral.getName(), mSamplePeripheral.getMacAddress()));
@@ -164,7 +176,7 @@ public class OtaActivity extends Activity {
             });
         }
     }
-
+-------------*/
 
     @OnClick(R.id.button_upload_010)
     void startFirmwareUpdate010() {
@@ -218,7 +230,28 @@ public class OtaActivity extends Activity {
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
 
+        Spinner spinnerTx = (Spinner)findViewById(R.id.txpower);
+        final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
+                " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
+                " +1.0 dbm ", " +0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
+                " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
+                " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
+        ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                txpower);
 
+        spinnerTx.setAdapter(txpowerList);
+        spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + txpower[position], Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         //----- Read Firmware Version ---------
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
@@ -226,10 +259,45 @@ public class OtaActivity extends Activity {
                 return;
             }
             runOnUiThread(() -> mFirmwareTextview.setText(String.format(getString(R.string.firmware_version), ByteString.of(data, 0, data.length).utf8())));
+
+            // /----- Read Model Name ----------------
+            mBluegigaPeripheral.readModelName(((response1, data1) -> {
+                if (response !=BlueteethResponse.NO_ERROR) {
+                    return;
+                }
+                runOnUiThread(() -> mModelnameTextview.setText(String.format("Model Name: %s", ByteString.of(data1, 0, data1.length).utf8())));
+
+                //-----  Read/Write  Tx Power Spinner -----
+                mBluegigaPeripheral.readTXpower((response2, data2) -> {
+                    if (response != BlueteethResponse.NO_ERROR) {
+                        return;
+                    }
+
+                    runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
+
+                    //----- Read Group Name ------
+                    mBluegigaPeripheral.readGroupName(((response3, data3) -> {
+                        if (response !=BlueteethResponse.NO_ERROR) {
+                            return;
+                        }
+                        runOnUiThread(() -> mGroupName.setText(String.format(getString(R.string.group_name), ByteString.of(data3, 0, data3.length).utf8())));
+
+                        //ReadGPINstop
+                        mBluegigaPeripheral.readGPINstop(((response5, data5) -> {
+                            if (response !=BlueteethResponse.NO_ERROR) {
+                                return;
+                            }
+                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length).utf8())));
+                        }));
+                        // ---- Read GPIN stop
+                    }));
+                    // ---- Read Group Name
+                });
+
+                //-------Model Name-------------------
+            }));
+            //----- Firmware Version ------
         });
-        //
-
-
     }
 
     @Override

@@ -23,7 +23,6 @@ public class BaseBluetoothPeripheral {
     private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
 
     private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("F202F081-50BC-497A-AC0E-A3410C972B63");
-    //private final static String CHARACTERISTIC_TX_POWER = "00002901-0000-1000-8000-00805f9b34fb";
     private static final UUID CHARACTERISTIC_TRANSMITDURATION = UUID.fromString("56a3688c-211e-48da-8676-f52d7053e8a8");
     private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
@@ -137,6 +136,13 @@ public class BaseBluetoothPeripheral {
      * */
     public void readGPINstop(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
+     * Read Group Name
+     */
+    public void readGroupName(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
 }
