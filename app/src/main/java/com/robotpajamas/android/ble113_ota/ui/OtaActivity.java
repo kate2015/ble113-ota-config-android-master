@@ -229,7 +229,7 @@ public class OtaActivity extends Activity {
 
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
-
+/*
         Spinner spinnerTx = (Spinner)findViewById(R.id.txpower);
         final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
                 " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
@@ -241,6 +241,8 @@ public class OtaActivity extends Activity {
                 txpower);
 
         spinnerTx.setAdapter(txpowerList);
+        //spinnerTx.getOnItemClickListener(txpowerList);
+        //AdapterView.OnItemClickListener listener = spinnerTx.getOnItemClickListener();
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -252,6 +254,7 @@ public class OtaActivity extends Activity {
 
             }
         });
+        */
 
         //----- Read Firmware Version ---------
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
@@ -273,7 +276,7 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
+                    runOnUiThread(() -> mTXpower.setText(String.format(getString(R.string.tx_power), ByteString.of(data2, 0, data2.length).utf8())));
 
                     //----- Read Group Name ------
                     mBluegigaPeripheral.readGroupName(((response3, data3) -> {
