@@ -233,6 +233,7 @@ public class BlueteethDevice {
             return false;
         }
 
+        Timber.e("nitaa  readCharacteristic: Characteristic available - %s", characteristic.toString());//nita
         mHandler.post(() -> mBluetoothGatt.readCharacteristic(gattCharacteristic));
         return true;
     }

@@ -4,6 +4,7 @@ import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 import com.robotpajamas.android.ble113_ota.listeners.OnBondingChangedListener;
 import com.robotpajamas.android.ble113_ota.listeners.OnCharacteristicReadListener;
+import com.robotpajamas.android.ble113_ota.listeners.OnCharacteristicWriteListener;
 import com.robotpajamas.android.ble113_ota.listeners.OnConnectionChangedListener;
 
 import java.util.UUID;
@@ -16,13 +17,15 @@ public class BaseBluetoothPeripheral {
 
     private static final UUID CHARACTERISTIC_SERIAL_NUMBER = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("6240cbea-6c84-4ace-b0a8-011447bb27e2");
+    //for test private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
     private static final UUID CHARACTERISTIC_MODEL_NAME = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
 
     private static final UUID CHARACTERISTIC_HARDWARE_VERSION = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_SOFTWARE_VERSION = UUID.fromString("00002A28-0000-1000-8000-00805f9b34fb");
     private static final UUID CHARACTERISTIC_MANUFACTURER_NAME = UUID.fromString("00002A29-0000-1000-8000-00805f9b34fb");
 
-    private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("F202F081-50BC-497A-AC0E-A3410C972B63");
+    private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("f202f081-50bc-497a-ac0e-a3410c972b63");
+    // for test private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("6240cbea-6c84-4ace-b0a8-011447bb27e2");
     private static final UUID CHARACTERISTIC_TRANSMITDURATION = UUID.fromString("56a3688c-211e-48da-8676-f52d7053e8a8");
     private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
@@ -145,5 +148,21 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
+    /**
+     * Read WIRE AND PIN#
+     */
+    public void readWireandPin(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GPIN_AND_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
+     * Write Group Name
+     */
+    public void writeGroupName(OnCharacteristicWriteListener onCharacteristicWriteListener) {
+        BlueteethUtils.writeData();
+        byte[] data;
+        data = new byte[]{0xFFDD};
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+    }
 }
 

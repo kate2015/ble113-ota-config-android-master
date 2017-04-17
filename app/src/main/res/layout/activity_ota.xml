@@ -19,57 +19,69 @@
         android:id="@+id/textview_modelname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/model_name"/>
 
     <TextView
         android:id="@+id/textview_firmware"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/firmware_version" />
 
     <TextView
         android:id="@+id/textview_txpower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/tx_power" />
 
-    <Spinner
+    <!--Spinner
         android:id="@+id/txpower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/textview_txpower"/>
+        android:layout_toRightOf="@id/textview_txpower" / -->
 
 
     <TextView
-        android:id="@+id/myTextViewB"
+        android:id="@+id/textview_transmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5sp"
         android:text="@string/transmit_duration" />
 
-    <Spinner
+    <!--Spinner
         android:id="@+id/transmit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/myTextViewB"/>
+        android:layout_toRightOf="@id/myTextViewB"/ -->
 
     <TextView
         android:id="@+id/textview_WireAndPin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/WireAndPin"/>
 
     <TextView
         android:id="@+id/textview_RecStopPin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/RecStopPin"/>
 
     <TextView
         android:id="@+id/textview_GroupName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:padding="5sp"
         android:text="@string/group_name"/>
+
+    <TextView
+        android:id="@+id/textview_setGroupName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android: text=""/>
 
     <Button
         android:id="@+id/button_upload_010"

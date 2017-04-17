@@ -3,6 +3,7 @@ package com.robotpajamas.android.ble113_ota.ui;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewDebug;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ProgressBar;
@@ -43,14 +44,19 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_txpower)
     TextView mTXpower;
 
+    @Bind(R.id.textview_transmit)
+    TextView mTransmit;
+
+    @Bind(R.id.textview_WireAndPin)
+    TextView mWireAndPin;
+
     @Bind(R.id.textview_RecStopPin)
     TextView mRecStopPin;
 
     @Bind(R.id.textview_GroupName)
     TextView mGroupName;
 
-    //@Bind(R.id.textview_transmit)
-    //TextView mTransmit;
+
 
     private BluegigaPeripheral mBluegigaPeripheral;
     private int mTotalNumberOfPackets = 0;
@@ -276,7 +282,7 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    runOnUiThread(() -> mTXpower.setText(String.format(getString(R.string.tx_power), ByteString.of(data2, 0, data2.length).utf8())));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).hex())));
 
                     //----- Read Group Name ------
                     mBluegigaPeripheral.readGroupName(((response3, data3) -> {
@@ -290,9 +296,29 @@ public class OtaActivity extends Activity {
                             if (response !=BlueteethResponse.NO_ERROR) {
                                 return;
                             }
-                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length).utf8())));
+                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length).hex())));
+
+                            //-- Transmit Duration -----
+                            mBluegigaPeripheral.readTransmit(((response6, data6) -> {
+                                if (response !=BlueteethResponse.NO_ERROR) {
+                                    return;
+                                }
+                                runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), ByteString.of(data6, 0, data6.length).hex())));
+
+                                // Read Wire And Pin
+                                mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
+                                    if (response !=BlueteethResponse.NO_ERROR) {
+                                        return;
+                                    }
+                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
+
+                                }));
+                                //-----Read Wire and pin -----
+
+                            }));
+                            //----- Transmit Duration stop -----
                         }));
-                        // ---- Read GPIN stop
+                        // ----- Read GPIN stop
                     }));
                     // ---- Read Group Name
                 });
