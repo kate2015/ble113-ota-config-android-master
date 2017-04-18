@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.robotpajamas.android.ble113_ota.R;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 import com.robotpajamas.android.ble113_ota.peripherals.BluegigaPeripheral;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethResponse;
@@ -43,6 +44,9 @@ public class OtaActivity extends Activity {
 
     @Bind(R.id.textview_txpower)
     TextView mTXpower;
+
+    @Bind(R.id.set_txpower)
+    TextView msetTXpower;
 
     @Bind(R.id.textview_transmit)
     TextView mTransmit;
@@ -235,8 +239,9 @@ public class OtaActivity extends Activity {
 
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
-/*
-        Spinner spinnerTx = (Spinner)findViewById(R.id.txpower);
+
+        //----- Set Tx Power Spinner ++ -----
+        Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
         final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
                 " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
                 " +1.0 dbm ", " +0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
@@ -247,8 +252,7 @@ public class OtaActivity extends Activity {
                 txpower);
 
         spinnerTx.setAdapter(txpowerList);
-        //spinnerTx.getOnItemClickListener(txpowerList);
-        //AdapterView.OnItemClickListener listener = spinnerTx.getOnItemClickListener();
+
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -260,7 +264,8 @@ public class OtaActivity extends Activity {
 
             }
         });
-        */
+        //----- Set Tx Power -- -----
+
 
         //----- Read Firmware Version ---------
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
@@ -311,6 +316,17 @@ public class OtaActivity extends Activity {
                                         return;
                                     }
                                     runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
+
+                                    /*/ Write TX Power
+                                    mBluegigaPeripheral.readTXpower(((respons8, data8) -> {
+                                        if (response != BlueteethResponse.NO_ERROR) {
+                                            return;
+                                        }
+                                        //runOnUiThread(() -> msetTXpower.setText(String.format(getString(R.string.set_txpower), ByteString.of(data8, 0, data8))));
+                                        runOnUiThread(() -> msetTXpower.setText(spinnerTx.getSelectedItem().toString()));
+                                    }));
+                                    //----- Write TX power ----- /*/
+
 
                                 }));
                                 //-----Read Wire and pin -----

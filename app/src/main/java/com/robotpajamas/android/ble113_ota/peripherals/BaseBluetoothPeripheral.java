@@ -117,6 +117,7 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_FIRMWARE_VERSION, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
+
     /**
      * Read the TX Power
      */
@@ -124,7 +125,17 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_TX_POWER, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
-
+    /**
+     * Write the Tx Power
+     */
+   /* public void writeTXpower(OnCharacteristicWriteListener onCharacteristicWriteListener){
+        byte[] data;
+        data = new byte[]{0x00};
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_TX_POWER, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+        BlueteethUtils.writeData(mOtaSource.readByteArray(PACKET_SIZE), CHARACTERISTIC_TX_POWER, CUSTOM_SERVICE_INFORMATION, mPeripheral, response -> {
+                    mOnFirmwarePacketUploadedListener.call();
+    }
+    */
 
     /**
      * Read Transmit Duration
@@ -149,20 +160,22 @@ public class BaseBluetoothPeripheral {
     }
 
     /**
+     * Write Group Name
+     */
+    public void writeGroupName(OnCharacteristicWriteListener onCharacteristicWriteListener) {
+        //BlueteethUtils.writeData();
+        byte[] data;
+        data = new byte[]{0x00};
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+    }
+
+    /**
      * Read WIRE AND PIN#
      */
     public void readWireandPin(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_GPIN_AND_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
-    /**
-     * Write Group Name
-     */
-    public void writeGroupName(OnCharacteristicWriteListener onCharacteristicWriteListener) {
-        BlueteethUtils.writeData();
-        byte[] data;
-        data = new byte[]{0xFFDD};
-        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
-    }
+
 }
 

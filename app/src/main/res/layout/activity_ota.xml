@@ -1,6 +1,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <!--Button
@@ -36,11 +38,12 @@
         android:padding="5sp"
         android:text="@string/tx_power" />
 
-    <!--Spinner
-        android:id="@+id/txpower"
+    <Spinner
+        android:id="@+id/set_txpower"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/textview_txpower" / -->
+        android:padding="5sp"
+        android:layout_toRightOf="@id/set_txpower"/>
 
 
     <TextView
@@ -77,11 +80,6 @@
         android:padding="5sp"
         android:text="@string/group_name"/>
 
-    <TextView
-        android:id="@+id/textview_setGroupName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android: text=""/>
 
     <Button
         android:id="@+id/button_upload_010"

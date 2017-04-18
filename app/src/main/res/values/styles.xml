@@ -8,4 +8,32 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NoActionBar" parent="Theme.AppCompat.Light.DialogWhenLarge">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="ThemeTransparent" parent="@android:style/Theme.Translucent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="TextInputHint" parent="TextAppearance.AppCompat.Small">
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">#909090</item>
+    </style>
+
+    <style name="custom_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowTitleStyle">@style/custom_dialog_title_style</item>
+    </style>
+    <style name="OrangeCheck">
+        <item name="colorAccent">#FF652F</item>
+    </style>
+    <style name="custom_dialog_title_style" parent="android:Widget.TextView">
+        <item name="android:background">#404040</item>
+        <item name="android:textSize">20dp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
 </resources>
