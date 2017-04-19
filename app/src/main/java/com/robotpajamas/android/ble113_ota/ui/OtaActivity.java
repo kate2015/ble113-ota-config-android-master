@@ -45,8 +45,8 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_txpower)
     TextView mTXpower;
 
-    @Bind(R.id.set_txpower)
-    TextView msetTXpower;
+    //@Bind(R.id.set_txpower)
+    //TextView msetTXpower;
 
     @Bind(R.id.textview_transmit)
     TextView mTransmit;
@@ -287,7 +287,8 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).hex())));
+                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).hex())));
+                    runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
                     mBluegigaPeripheral.readGroupName(((response3, data3) -> {
