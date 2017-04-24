@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -293,10 +294,19 @@ public class OtaActivity extends Activity {
                 " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
                 " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
         ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
-                android.R.layout.simple_spinner_item,
+                android.R.layout.simple_spinner_dropdown_item,
                 txpower);
 
         spinnerTx.setAdapter(txpowerList);
+
+        /*ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(OtaActivity.this,
+                R.array.txpower_array,
+                android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerTx.setAdapter(adapter);
+        */
 
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
