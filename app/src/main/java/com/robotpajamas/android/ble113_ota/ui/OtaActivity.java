@@ -11,12 +11,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.robotpajamas.android.ble113_ota.R;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 import com.robotpajamas.android.ble113_ota.peripherals.BluegigaPeripheral;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethResponse;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -231,6 +233,48 @@ public class OtaActivity extends Activity {
         }
     }
 
+    private byte[] StringDataToByte(String strData)
+    {
+        String[] strArray = strData.split(",");
+        byte[] bData = new byte[1];
+
+        for(int i = 0; i < strArray.length; i++)
+        {
+            bData[0] |= (1 << Byte.parseByte(strArray[i]));
+        }
+        return bData;
+    }
+
+    private String BitToInt(byte[] data)
+    {
+        //int[] iData = new int[8];
+        int id = 0;
+        String str_ids = "";
+        for(int i = 0; i < 8; i++)
+        {
+            if ( ((data[0] >> i) & 0x1) == 1) {
+                //iData[id++] = i;
+                if(id > 0)
+                    str_ids += ",";
+                id++;
+                str_ids += Integer.toString(i);
+            }
+
+
+        }
+        Timber.d("nitaa bit to string %s",str_ids );
+
+
+        return str_ids;
+    }
+
+    private String TwoBytesToShort(byte[] data) {
+        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
+
+        //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
+        return Short.toString(sData);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,13 +286,14 @@ public class OtaActivity extends Activity {
 
         //----- Set Tx Power Spinner ++ -----
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
+        //
         final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
                 " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
                 " +1.0 dbm ", " +0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
                 " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
                 " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
         ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
-                android.R.layout.simple_spinner_dropdown_item,
+                android.R.layout.simple_spinner_item,
                 txpower);
 
         spinnerTx.setAdapter(txpowerList);
@@ -288,7 +333,8 @@ public class OtaActivity extends Activity {
                     }
 
                     //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).hex())));
-                    runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
+                    //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
                     mBluegigaPeripheral.readGroupName(((response3, data3) -> {
@@ -302,7 +348,8 @@ public class OtaActivity extends Activity {
                             if (response !=BlueteethResponse.NO_ERROR) {
                                 return;
                             }
-                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length).hex())));
+                            //runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length))));
+                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin) , BitToInt(data5))));
 
                             //-- Transmit Duration -----
                             mBluegigaPeripheral.readTransmit(((response6, data6) -> {
@@ -316,7 +363,8 @@ public class OtaActivity extends Activity {
                                     if (response !=BlueteethResponse.NO_ERROR) {
                                         return;
                                     }
-                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
+                                    //runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
+                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
 
                                     /*/ Write TX Power
                                     mBluegigaPeripheral.readTXpower(((respons8, data8) -> {

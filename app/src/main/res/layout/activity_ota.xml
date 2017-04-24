@@ -43,7 +43,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="5sp"
-        android:layout_toRightOf="@id/set_txpower"/>
+        android:text="@string/set_txpower"
+        android:layout_gravity="center_horizontal"/>
 
 
     <TextView
