@@ -153,6 +153,15 @@ public class BaseBluetoothPeripheral {
     }
 
     /**
+     * Set GPIN STOP CMD PINS
+     */
+    public void SetStopPin(OnCharacteristicWriteListener onCharacteristicWriteListener){
+        byte[] data;
+        data = new byte[]{0x00};
+        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+    }
+
+    /**
      * Read Group Name
      */
     public void readGroupName(OnCharacteristicReadListener onCharacteristicReadListener) {

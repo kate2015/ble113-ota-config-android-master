@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewDebug;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.robotpajamas.android.ble113_ota.R;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
@@ -59,6 +61,9 @@ public class OtaActivity extends Activity {
 
     @Bind(R.id.textview_RecStopPin)
     TextView mRecStopPin;
+
+    @Bind(R.id.setstoppin)
+    Button mSetStop;
 
     @Bind(R.id.textview_GroupName)
     TextView mGroupName;
@@ -376,15 +381,15 @@ public class OtaActivity extends Activity {
                                     //runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
                                     runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
 
-                                    /*/ Write TX Power
-                                    mBluegigaPeripheral.readTXpower(((respons8, data8) -> {
+                                    /*/ Set Stop Pin
+                                    mBluegigaPeripheral.SetStopPin(((respons8, data8) -> {
                                         if (response != BlueteethResponse.NO_ERROR) {
                                             return;
                                         }
                                         //runOnUiThread(() -> msetTXpower.setText(String.format(getString(R.string.set_txpower), ByteString.of(data8, 0, data8))));
-                                        runOnUiThread(() -> msetTXpower.setText(spinnerTx.getSelectedItem().toString()));
+                                        runOnUiThread(() -> mSetStop.setText(spinnerTx.getSelectedItem().toString()));
                                     }));
-                                    //----- Write TX power ----- /*/
+                                    //----- Set Stop pin ----- /*/
 
 
                                 }));
