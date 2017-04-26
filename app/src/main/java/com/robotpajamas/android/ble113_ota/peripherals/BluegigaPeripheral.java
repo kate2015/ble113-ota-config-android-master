@@ -4,6 +4,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
 
+import com.robotpajamas.android.ble113_ota.listeners.OnCharacteristicWriteListener;
 import com.robotpajamas.android.ble113_ota.listeners.OnFirmwarePacketUploadedListener;
 import com.robotpajamas.android.ble113_ota.listeners.OnFirmwareUpdateCompleteListener;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
@@ -22,6 +23,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 
     /* OTA Service */
     private static final UUID SERVICE_OTA = UUID.fromString("1d14d6ee-fd63-4fa1-bfa4-8f47b42119f0");
+    private static final UUID CUSTOM_SERVICE_INFORMATION = UUID.fromString("8409f408-63e3-4eea-aaf4-762ddec5319c");
 //    private static final UUID CHARACTERISTIC_CONTROL_ACK = UUID.fromString("f7bf3564-fb6d-4e53-88a4-5e37e0326063");
 //    private static final UUID CHARACTERISTIC_DATA_NO_ACK = UUID.fromString("984227f3-34fc-4045-a5d0-2c581f81a153");
 
@@ -30,6 +32,9 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 
     private static final UUID CHARACTERISTIC_CONTROL_NO_ACK = UUID.fromString("F7BF3564-FB6D-4E53-88A4-5E37E0326063");
     private static final UUID CHARACTERISTIC_DATA_NO_ACK = UUID.fromString("984227F3-34FC-4045-A5D0-2C581F81A153");
+
+    private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
+    private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
 
     private static final int PACKET_SIZE = 20;
 
@@ -42,6 +47,17 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 
     public BluegigaPeripheral(BlueteethDevice device) {
         super(device);
+    }
+
+    /**
+     * Set GPIN STOP CMD PINS
+     */
+    public void SetStopPin(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
+
+        //mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, );
+
+        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+
     }
 
     public int updateFirmware(File  otaFile,

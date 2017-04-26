@@ -22,6 +22,7 @@ import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethResponse;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,6 +34,8 @@ import okio.BufferedSource;
 import okio.ByteString;
 import okio.Okio;
 import timber.log.Timber;
+
+import static android.R.attr.onClick;
 
 
 public class OtaActivity extends Activity {
@@ -56,10 +59,12 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_transmit)
     TextView mTransmit;
 
-    @Bind(R.id.textview_WireAndPin)
+    //@Bind(R.id.textview_WireAndPin)
+    @Bind(R.id.WireAndPin)
     TextView mWireAndPin;
 
     @Bind(R.id.textview_RecStopPin)
+    //@Bind(R.id.RecStopPin)
     TextView mRecStopPin;
 
     @Bind(R.id.setstoppin)
@@ -73,6 +78,7 @@ public class OtaActivity extends Activity {
     private BluegigaPeripheral mBluegigaPeripheral;
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
+    //private boolean mStatus = true;
 
     /*/------
     @OnClick(R.id.Connect)
@@ -195,6 +201,17 @@ public class OtaActivity extends Activity {
         }
     }
 -------------*/
+    @OnClick(R.id.setstoppin)
+    void setStopRecPin(){
+        //mBluegigaPeripheral.SetStopPin();
+        EditText ed = (EditText) findViewById(R.id.RecStopPin);
+        String input = ed.getText().toString();
+        byte[] value1 = StringDataToByte(input);
+        String data = BitToInt(value1);
+        ed.setText(data);
+        mBluegigaPeripheral.SetStopPin(value1,response -> {});
+
+    }
 
     @OnClick(R.id.button_upload_010)
     void startFirmwareUpdate010() {
@@ -378,7 +395,7 @@ public class OtaActivity extends Activity {
                                     if (response !=BlueteethResponse.NO_ERROR) {
                                         return;
                                     }
-                                    //runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin), ByteString.of(data7, 0, data7.length).hex())));
+
                                     runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
 
                                     /*/ Set Stop Pin

@@ -32,6 +32,11 @@
         android:layout_height="wrap_content"
         android:padding="5sp"
         android:text="@string/firmware_version" />
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
         android:id="@+id/textview_txpower"
@@ -46,8 +51,8 @@
         android:layout_height="wrap_content"
         android:padding="5sp"
         android:text="@string/set_txpower"
-        android:layout_gravity="left"/>
-
+        android:layout_gravity="right"/>
+</LinearLayout>
 
     <TextView
         android:id="@+id/textview_transmit"
@@ -62,6 +67,11 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/myTextViewB"/ -->
 
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
         android:id="@+id/textview_WireAndPin"
         android:layout_width="wrap_content"
@@ -73,12 +83,14 @@
     <EditText
         android:id="@+id/WireAndPin"
         style="@style/Widget.AppCompat.Light.AutoCompleteTextView"
-        android:layout_width="312dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="25"
+        android:ems="8"
         android:hint="For ex: 0,1 should write as 0,1 and only allow 2numbers. "
         android:inputType="text"
         android:textSize="12dp" />
+</LinearLayout>
+
     <!--android.support.design.widget.TextInputLayout
         android:id="@+id/til_et_name"
         android:layout_width="match_parent"
@@ -86,28 +98,35 @@
         >
     </android.support.design.widget.TextInputLayout-->
 
-    <TextView
-        android:id="@+id/textview_RecStopPin"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:padding="5sp"
-        android:text="@string/RecStopPin"/>
+        android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/RecStopPin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="18"
-        android:hint="For ex: only allow a numbers.(0-7) "
-        android:inputType="text"
-        android:singleLine="false"
-        android:textSize="12dp" />
+        <TextView
+            android:id="@+id/textview_RecStopPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="@string/RecStopPin"/>
 
-    <Button
-        android:id="@+id/setstoppin"
-        android:layout_width="64dp"
-        android:layout_height="wrap_content"
-        android:text="OK" />
+        <EditText
+            android:id="@+id/RecStopPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="14"
+            android:hint="For ex: only allow a numbers.(0-7) "
+            android:inputType="text|number"
+            android:singleLine="false"
+            android:textSize="10dp" />
+
+        <Button
+            android:id="@+id/setstoppin"
+            android:layout_width="48dp"
+            android:layout_height="wrap_content"
+            android:text="OK" />
+</LinearLayout>
 
     <TextView
         android:id="@+id/textview_GroupName"

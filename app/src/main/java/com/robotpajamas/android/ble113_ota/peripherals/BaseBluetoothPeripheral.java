@@ -153,13 +153,13 @@ public class BaseBluetoothPeripheral {
     }
 
     /**
-     * Set GPIN STOP CMD PINS
-     */
-    public void SetStopPin(OnCharacteristicWriteListener onCharacteristicWriteListener){
-        byte[] data;
-        data = new byte[]{0x00};
-        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
-    }
+     * Write GPIN STOP CMD PINS
+
+    public void writeStopPin(OnCharacteristicWriteListener onCharacteristicWriteListener){
+        BlueteethUtils.writeData(CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicWriteListener);
+    }*/
+
+
 
     /**
      * Read Group Name

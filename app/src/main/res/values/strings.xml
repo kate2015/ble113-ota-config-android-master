@@ -12,16 +12,6 @@
     <string name="firmware_version">Firmware Version : %s</string>
     <string name="model_name">Model Name : %</string>
     <string name="tx_power">TX Power : %s</string>
-    <string-array name="txpower_array">
-        <item>Mercury</item>
-        <item>Venus</item>
-        <item>Earth</item>
-        <item>Mars</item>
-        <item>Jupiter</item>
-        <item>Saturn</item>
-        <item>Uranus</item>
-        <item>Neptune</item>
-    </string-array>
     <string name="set_txpower">Set TX Power : %s</string>
     <string name="transmit_duration">Transmit Duration : %s</string>
     <string name="WireAndPin">GPI Wire And Pin# : %s</string>
