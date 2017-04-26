@@ -59,8 +59,8 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_transmit)
     TextView mTransmit;
 
-    //@Bind(R.id.textview_WireAndPin)
-    @Bind(R.id.WireAndPin)
+    @Bind(R.id.textview_WireAndPin)
+    //@Bind(R.id.WireAndPin)
     TextView mWireAndPin;
 
     @Bind(R.id.textview_RecStopPin)
@@ -201,6 +201,17 @@ public class OtaActivity extends Activity {
         }
     }
 -------------*/
+    @OnClick(R.id.setrecpin)
+    void setRecPin(){
+        EditText ed = (EditText) findViewById(R.id.WireAndPin);
+        String input = ed.getText().toString();
+        byte[] value1 = StringDataToByte(input);
+        String data = BitToInt(value1);
+        ed.setText(data);
+        mBluegigaPeripheral.setRecPin(value1,response -> {});
+
+    }
+
     @OnClick(R.id.setstoppin)
     void setStopRecPin(){
         //mBluegigaPeripheral.SetStopPin();
@@ -211,6 +222,16 @@ public class OtaActivity extends Activity {
         ed.setText(data);
         mBluegigaPeripheral.SetStopPin(value1,response -> {});
 
+    }
+
+    @OnClick(R.id.setgroupname)
+    void setGroupName(){
+        EditText ed = (EditText) findViewById(R.id.edittext_Groupname);
+        String input = ed.getText().toString();
+        //byte[] value1 = StringDataToByte(input);
+        ed.setText(input);
+
+        mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
     }
 
     @OnClick(R.id.button_upload_010)

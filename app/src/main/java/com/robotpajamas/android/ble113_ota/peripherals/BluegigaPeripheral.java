@@ -35,6 +35,7 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 
     private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
+    private static final UUID CHARACTERISTIC_GROUP_1 = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
 
     private static final int PACKET_SIZE = 20;
 
@@ -57,6 +58,31 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
         //mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, );
 
         mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+
+    }
+
+    /**
+     *
+     * @param data
+     * @param onCharacteristicWriteListener
+     * @return
+     */
+    public void setRecPin(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
+
+        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_AND_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+
+    }
+
+    /**
+     *
+     * @param data
+     * @param onCharacteristicWriteListener
+     * @return
+     * @return
+     */
+    public void setGroupName(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
+
+        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
 
     }
 
