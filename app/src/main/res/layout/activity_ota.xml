@@ -49,23 +49,28 @@
             android:id="@+id/set_txpower"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:padding="5sp"
             android:text="@string/set_txpower" />
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textview_transmit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="5sp"
-        android:text="@string/transmit_duration" />
 
-    <!--Spinner
-        android:id="@+id/transmit"
-        android:layout_width="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/myTextViewB"/ -->
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/textview_transmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="@string/transmit_duration" />
+
+        <Spinner
+            android:id="@+id/transmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/textview_transmit"/>
+    </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

@@ -365,6 +365,27 @@ public class OtaActivity extends Activity {
         //----- Set Tx Power -- -----
 
 
+        //----- Read/Write  Transmit Duration --------------
+        Spinner spinner = (Spinner)findViewById(R.id.transmit);
+        final String[] transmit = {" 30secs ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
+        ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                transmit);
+
+        spinner.setAdapter(transmitList);
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+        //----- Read/write Transmit Duration -----------------
+
         //----- Read Firmware Version ---------
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
             if (response != BlueteethResponse.NO_ERROR) {
