@@ -72,11 +72,7 @@
             android:layout_toRightOf="@id/textview_transmit"/>
     </LinearLayout>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+
 
         <TextView
             android:id="@+id/textview_WireAndPin"
@@ -85,21 +81,28 @@
             android:padding="5sp"
             android:text="@string/WireAndPin" />
 
-
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/WireAndPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="14"
-            android:hint="For ex: 0,1 should write as 0,1 and only allow 2numbers. "
+            android:ems="25"
+            android:hint="For ex: 0,1 should write as 0,1 and only allow 2numbers. (0-7)"
             android:inputType="text"
             android:textSize="10dp" />
 
         <Button
             android:id="@+id/setrecpin"
-            android:layout_width="48dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:text="Ok" />
+            android:textColor="#ffffff"
+            android:background="#9f9f9f"
+            android:text="Ok"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -111,13 +114,6 @@
     </android.support.design.widget.TextInputLayout-->
 
 
-
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
         <TextView
             android:id="@+id/textview_RecStopPin"
             android:layout_width="wrap_content"
@@ -125,11 +121,16 @@
             android:padding="5sp"
             android:text="@string/RecStopPin" />
 
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <EditText
             android:id="@+id/RecStopPin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:ems="14"
+            android:ems="25"
             android:hint="For ex: only allow a numbers.(0-7) "
             android:inputType="text|number"
             android:singleLine="false"
@@ -137,9 +138,12 @@
 
         <Button
             android:id="@+id/setstoppin"
-            android:layout_width="48dp"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:text="OK" />
+            android:textColor="#ffffff"
+            android:background="#9f9f9f"
+            android:text="OK"
+            android:textStyle="bold"/>
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -166,9 +170,12 @@
 
         <Button
             android:id="@+id/setgroupname"
-            android:layout_width="match_parent"
+            android:layout_width="32dp"
             android:layout_height="wrap_content"
-            android:text="Set" />
+            android:background="#9f9f9f"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold"/>
 
     </LinearLayout>
 
@@ -176,12 +183,18 @@
         android:id="@+id/button_upload_010"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp"
+        android:background="#9f9f9f"
         android:text="@string/button_upload_010" />
 
     <Button
         android:id="@+id/button_upload_011"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:textColor="#ffffff"
+        android:layout_marginTop="10dp"
+        android:background="#9f9f9f"
         android:text="@string/button_upload_011" />
 
 
