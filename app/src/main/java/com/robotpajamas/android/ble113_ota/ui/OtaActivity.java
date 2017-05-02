@@ -2,6 +2,7 @@ package com.robotpajamas.android.ble113_ota.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.renderscript.Element;
 import android.view.View;
 import android.view.ViewDebug;
 import android.widget.AdapterView;
@@ -25,6 +26,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+
+import javax.xml.datatype.DatatypeFactory;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -312,6 +315,42 @@ public class OtaActivity extends Activity {
         return str_ids;
     }
 
+    private String transmitime(byte[] data){
+
+        String time = "";
+        String transmit_dura = "";
+
+        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
+        time = Short.toString(sData);
+
+        switch (time)
+        {
+            case "1":
+                transmit_dura = "30 secs";
+                break;
+            case "2":
+                transmit_dura = "1 mins";
+                break;
+            case "4":
+                transmit_dura = "2 mins";
+                break;
+            case "10":
+                transmit_dura = "5 mins";
+                break;
+            case "20":
+                transmit_dura = "10 mins";
+                break;
+            case "30":
+                transmit_dura = "15 mins";
+                break;
+            case "40":
+                transmit_dura = "20 mins";
+                break;
+        }
+        return transmit_dura;
+
+    }
+
     private String TwoBytesToShort(byte[] data) {
         short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
 
@@ -430,7 +469,8 @@ public class OtaActivity extends Activity {
                                 if (response !=BlueteethResponse.NO_ERROR) {
                                     return;
                                 }
-                                runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), ByteString.of(data6, 0, data6.length).hex())));
+                                runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), transmitime(data6))));
+                                //runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), ByteString.of(data6, 0, data6.length).hex())));
 
                                 // Read Wire And Pin
                                 mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
