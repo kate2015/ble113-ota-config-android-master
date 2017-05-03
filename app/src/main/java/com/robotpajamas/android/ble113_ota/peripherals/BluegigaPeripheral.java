@@ -30,6 +30,8 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
 //    private static final UUID CHARACTERISTIC_CONTROL_NO_ACK = UUID.fromString("01737572-6573-686a-6f73-68692e636f6d");
 //    private static final UUID CHARACTERISTIC_DATA_ACK = UUID.fromString("00737572-6573-686a-6f73-68692e636f6d");
 
+    private static final UUID CHARACTERISTIC_TX_POWER = UUID.fromString("f202f081-50bc-497a-ac0e-a3410c972b63");
+    private static final UUID CHARACTERISTIC_TRANSMITDURATION = UUID.fromString("56a3688c-211e-48da-8676-f52d7053e8a8");
     private static final UUID CHARACTERISTIC_CONTROL_NO_ACK = UUID.fromString("F7BF3564-FB6D-4E53-88A4-5E37E0326063");
     private static final UUID CHARACTERISTIC_DATA_NO_ACK = UUID.fromString("984227F3-34FC-4045-A5D0-2C581F81A153");
 
@@ -82,7 +84,20 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
      */
     public void setGroupName(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
 
-        mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+
+    }
+
+    /**
+     *
+     * @param data
+     * @param onCharacteristicWriteListener
+     * @param
+     * @return
+     */
+    public void setTransmitTime(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
+
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_TRANSMITDURATION, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
 
     }
 

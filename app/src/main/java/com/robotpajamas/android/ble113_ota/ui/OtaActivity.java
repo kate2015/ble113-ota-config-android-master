@@ -315,6 +315,20 @@ public class OtaActivity extends Activity {
         return str_ids;
     }
 
+    private String TwoBytesToShort(byte[] data) {
+        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
+
+        //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
+        return Short.toString(sData);
+    }
+
+    private byte[] hex2Byte(String hexString) {
+        byte[] bytes = new byte[hexString.length() / 2];
+        for (int i=0 ; i<bytes.length ; i++)
+            bytes[i] = Byte.parseByte(hexString);
+        return bytes;
+    }
+
     private String transmitime(byte[] data){
 
         String time = "";
@@ -351,11 +365,41 @@ public class OtaActivity extends Activity {
 
     }
 
-    private String TwoBytesToShort(byte[] data) {
-        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
 
-        //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
-        return Short.toString(sData);
+
+    private void timetoTransmit(String Selected_item){
+
+        String time = "";
+        switch (Selected_item){
+            case "30secs":
+                time = "1";
+                break;
+            case " 1 mins ":
+                time = "2";
+                break;
+            case " 2mins ":
+                time = "4";
+                break;
+            case " 5 mins ":
+                time = "10";
+                break;
+            case "10 mins ":
+                time = "20";
+                break;
+            case " 15 mins ":
+                time = "30";
+                break;
+            case " 20 mins ":
+                time = "40";
+                break;
+            default:
+                time = "1";
+        }
+
+        //byte[] bdata = time.getBytes();
+        byte[] bdata = hex2Byte(time);
+        //byte[] bdata = StringDataToByte(time);
+        mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
 
     @Override
@@ -393,6 +437,7 @@ public class OtaActivity extends Activity {
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + txpower[position], Toast.LENGTH_SHORT).show();
             }
 
@@ -405,16 +450,20 @@ public class OtaActivity extends Activity {
 
 
         //----- Read/Write  Transmit Duration --------------
-        Spinner spinner = (Spinner)findViewById(R.id.transmit);
-        final String[] transmit = {" 30secs ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
+        Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
+        final String[] transmit = {"30secs", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
         ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 transmit);
 
-        spinner.setAdapter(transmitList);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        spinnerTransmit.setAdapter(transmitList);
+        spinnerTransmit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String Selected_item = spinnerTransmit.getSelectedItem().toString();
+
+                timetoTransmit(Selected_item);
+
                 Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
             }
 
