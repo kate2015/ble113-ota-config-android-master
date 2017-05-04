@@ -15,7 +15,7 @@ public class BaseBluetoothPeripheral {
     private static final UUID SERVICE_DEVICE_INFORMATION = UUID.fromString("0000180A-0000-1000-8000-00805f9b34fb");
     private static final UUID CUSTOM_SERVICE_INFORMATION = UUID.fromString("8409f408-63e3-4eea-aaf4-762ddec5319c");
 
-    private static final UUID CHARACTERISTIC_SERIAL_NUMBER = UUID.fromString("00002A27-0000-1000-8000-00805f9b34fb");
+    private static final UUID CHARACTERISTIC_SERIAL_NUMBER = UUID.fromString("510f4784-5ecb-4c0f-92e3-2d7a9e28b71c");
     private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("6240cbea-6c84-4ace-b0a8-011447bb27e2");
     //for test private static final UUID CHARACTERISTIC_FIRMWARE_VERSION = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
     private static final UUID CHARACTERISTIC_MODEL_NAME = UUID.fromString("00002A24-0000-1000-8000-00805f9b34fb");
@@ -117,6 +117,12 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_FIRMWARE_VERSION, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
+    /**
+     * Read MB SN
+     */
+    public void readMBSN(OnCharacteristicReadListener onCharacteristicReadListener){
+        BlueteethUtils.read(CHARACTERISTIC_SERIAL_NUMBER, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
 
     /**
      * Read the TX Power

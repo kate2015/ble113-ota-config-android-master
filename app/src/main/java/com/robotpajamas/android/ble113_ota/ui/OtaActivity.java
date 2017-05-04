@@ -53,6 +53,9 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_firmware)
     TextView mFirmwareTextview;
 
+    @Bind(R.id.textview_mb)
+    TextView mMBSNTextview;
+
     @Bind(R.id.textview_txpower)
     TextView mTXpower;
 
@@ -451,7 +454,7 @@ public class OtaActivity extends Activity {
 
         //----- Read/Write  Transmit Duration --------------
         Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
-        final String[] transmit = {"30secs", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
+        final String[] transmit = {" 5 mins ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
         ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 transmit);
@@ -529,15 +532,15 @@ public class OtaActivity extends Activity {
 
                                     runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
 
-                                    /*/ Set Stop Pin
-                                    mBluegigaPeripheral.SetStopPin(((respons8, data8) -> {
+                                    // Read MBSN
+                                    mBluegigaPeripheral.readMBSN(((respons8, data8) -> {
                                         if (response != BlueteethResponse.NO_ERROR) {
                                             return;
                                         }
                                         //runOnUiThread(() -> msetTXpower.setText(String.format(getString(R.string.set_txpower), ByteString.of(data8, 0, data8))));
-                                        runOnUiThread(() -> mSetStop.setText(spinnerTx.getSelectedItem().toString()));
+                                        runOnUiThread(() -> mMBSNTextview.setText(String.format(getString(R.string.MB_SN) , ByteString.of(data8, 0 , data8.length).utf8())));
                                     }));
-                                    //----- Set Stop pin ----- /*/
+                                    //----- Set Stop pin ----- //
 
 
                                 }));

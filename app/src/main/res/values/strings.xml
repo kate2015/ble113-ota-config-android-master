@@ -10,6 +10,7 @@
 
     <string name="device_name">Device Name :</string>
     <string name="firmware_version">Firmware Version : %s</string>
+    <string name="MB_SN">MB SN : %s</string>
     <string name="model_name">Model Name : %</string>
     <string name="tx_power">TX Power : %s</string>
     <string name="set_txpower">Set TX Power : %s</string>

@@ -32,6 +32,13 @@
         android:padding="5sp"
         android:text="@string/firmware_version" />
 
+    <TextView
+        android:id="@+id/textview_mb"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="@string/MB_SN" />
+
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
