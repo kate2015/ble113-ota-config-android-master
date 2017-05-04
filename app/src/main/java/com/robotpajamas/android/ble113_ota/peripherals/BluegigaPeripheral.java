@@ -57,8 +57,6 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
      */
     public void SetStopPin(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
 
-        //mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, );
-
         mPeripheral.writeCharacteristic(data,CHARACTERISTIC_GPIN_STOP_CMD_PINS, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
 
     }

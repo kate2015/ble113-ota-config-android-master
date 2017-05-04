@@ -364,10 +364,6 @@ public class OtaActivity extends Activity {
         String time = "";
         String transmit_dura = "";
 
-        //short sData = (short) ((short)((data[0] & 0xff) * 0x10) + (short)(data[1] & 0xff));
-        //short sData = (short) ((short)((data[0]) * 0x10) + (short)(data[1] & 0xff));
-        //time = Short.toString(sData);
-        //int id = ((data[0] * 0x10)+ data[1]);
         time = Integer.toString(data[0]*10 + data[1]);
 
         switch (time)
@@ -430,8 +426,7 @@ public class OtaActivity extends Activity {
         }
 
         byte[] bdata = StrHex2ByteArry(time);
-        //byte[] bdata = hex2Byte(time);
-        //byte[] bdata = StringDataToByte(time);
+
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
 
@@ -528,8 +523,8 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).hex())));
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).utf8())));
+                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------

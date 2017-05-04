@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TriggerBox OTA</string>
+    <string name="app_name">TriggerBox CFG</string>
     <string name="action_settings">Settings</string>
 
     <string name="progress_connecting">Connecting…</string>
