@@ -326,10 +326,37 @@ public class OtaActivity extends Activity {
     }
 
     private byte[] hex2Byte(String hexString) {
-        byte[] bytes = new byte[hexString.length() / 2];
-        for (int i=0 ; i<bytes.length ; i++)
-            bytes[i] = Byte.parseByte(hexString);
+        byte[] bytes = new byte[hexString.length()];
+        for (int i=0 ; i<bytes.length ; i++){
+            bytes[i] |= (i << Byte.parseByte(hexString));
+            //bytes[i] = Byte.parseByte(hexString);
+        }
+
         return bytes;
+    }
+
+    private byte[] StrHex2ByteArry(String strHex)
+    {
+        byte[] rc = new byte[strHex.length()];
+        int rc_id = 0;
+
+        for(int i = strHex.length() - 1; i >= 0; i--)
+        {
+            char c = strHex.charAt(i);
+            if(c >= '0' && c <= '9')
+            {
+                c -= '0';
+            }else if (c >= 'A' && c <= 'F') {
+                c -= 'A';
+            }else if (c >= 'a' && c <= 'f') {
+                c -= 'a';
+            }
+            rc[rc_id++] = (byte) c;
+        }
+        return rc;
+
+        //for(int i = 0; i >  strHex.length() ; i++)
+        //for(int i = strHex.length() - 1; i >= 0; i--)
     }
 
     private String transmitime(byte[] data){
@@ -337,30 +364,33 @@ public class OtaActivity extends Activity {
         String time = "";
         String transmit_dura = "";
 
-        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
-        time = Short.toString(sData);
+        //short sData = (short) ((short)((data[0] & 0xff) * 0x10) + (short)(data[1] & 0xff));
+        //short sData = (short) ((short)((data[0]) * 0x10) + (short)(data[1] & 0xff));
+        //time = Short.toString(sData);
+        //int id = ((data[0] * 0x10)+ data[1]);
+        time = Integer.toString(data[0]*10 + data[1]);
 
         switch (time)
         {
             case "1":
                 transmit_dura = "30 secs";
                 break;
-            case "2":
+            case "20":
                 transmit_dura = "1 mins";
                 break;
-            case "4":
+            case "40":
                 transmit_dura = "2 mins";
                 break;
             case "10":
                 transmit_dura = "5 mins";
                 break;
-            case "20":
+            case "2":
                 transmit_dura = "10 mins";
                 break;
-            case "30":
+            case "3":
                 transmit_dura = "15 mins";
                 break;
-            case "40":
+            case "4":
                 transmit_dura = "20 mins";
                 break;
         }
@@ -374,33 +404,33 @@ public class OtaActivity extends Activity {
 
         String time = "";
         switch (Selected_item){
-            case "30secs":
+            case "30 secs":
                 time = "1";
                 break;
-            case " 1 mins ":
+            case "1 mins":
                 time = "2";
                 break;
-            case " 2mins ":
+            case "2 mins":
                 time = "4";
                 break;
-            case " 5 mins ":
+            case "5 mins":
                 time = "10";
                 break;
-            case "10 mins ":
+            case "10 mins":
                 time = "20";
                 break;
-            case " 15 mins ":
+            case "15 mins":
                 time = "30";
                 break;
-            case " 20 mins ":
+            case "20 mins":
                 time = "40";
                 break;
             default:
                 time = "1";
         }
 
-        //byte[] bdata = time.getBytes();
-        byte[] bdata = hex2Byte(time);
+        byte[] bdata = StrHex2ByteArry(time);
+        //byte[] bdata = hex2Byte(time);
         //byte[] bdata = StringDataToByte(time);
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
@@ -454,7 +484,8 @@ public class OtaActivity extends Activity {
 
         //----- Read/Write  Transmit Duration --------------
         Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
-        final String[] transmit = {" 5 mins ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
+        //final String[] transmit = {"30 secs ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
+        final String[] transmit = {"20 mins", "1 mins", "2mins", "5 mins", "10 mins", "15 mins","30 secs"};
         ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 transmit);
