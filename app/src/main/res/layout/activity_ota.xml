@@ -65,6 +65,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/textview_transmit"
             android:layout_width="wrap_content"
@@ -76,23 +77,41 @@
             android:id="@+id/transmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/textview_transmit"/>
+            android:layout_toRightOf="@id/textview_transmit" />
     </LinearLayout>
-
-
-
-        <TextView
-            android:id="@+id/textview_WireAndPin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:text="@string/WireAndPin" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_trigdelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5sp"
+            android:text="@string/trig_delay" />
+
+        <Spinner
+            android:id="@+id/trigdelay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textview_WireAndPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="@string/WireAndPin" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
         <EditText
             android:id="@+id/WireAndPin"
             android:layout_width="wrap_content"
@@ -106,10 +125,10 @@
             android:id="@+id/setrecpin"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:textColor="#ffffff"
             android:background="#9f9f9f"
             android:text="Ok"
-            android:textStyle="bold"/>
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -121,18 +140,19 @@
     </android.support.design.widget.TextInputLayout-->
 
 
-        <TextView
-            android:id="@+id/textview_RecStopPin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5sp"
-            android:text="@string/RecStopPin" />
+    <TextView
+        android:id="@+id/textview_RecStopPin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="5sp"
+        android:text="@string/RecStopPin" />
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <EditText
             android:id="@+id/RecStopPin"
             android:layout_width="wrap_content"
@@ -147,20 +167,21 @@
             android:id="@+id/setstoppin"
             android:layout_width="32dp"
             android:layout_height="32dp"
-            android:textColor="#ffffff"
             android:background="#9f9f9f"
             android:text="OK"
-            android:textStyle="bold"/>
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/textview_GroupName"
             android:layout_width="wrap_content"
@@ -185,7 +206,7 @@
             android:background="#9f9f9f"
             android:text="OK"
             android:textColor="#ffffff"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -193,23 +214,23 @@
         android:id="@+id/button_upload_010"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="#9f9f9f"
-        android:text="@string/button_upload_010" />
+        android:text="@string/button_upload_010"
+        android:textColor="#ffffff" />
 
     <Button
         android:id="@+id/button_upload_011"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:textColor="#ffffff"
-        android:layout_marginTop="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
         android:background="#9f9f9f"
-        android:text="@string/button_upload_011" />
+        android:text="@string/button_upload_011"
+        android:textColor="#ffffff" />
 
 
 </LinearLayout>

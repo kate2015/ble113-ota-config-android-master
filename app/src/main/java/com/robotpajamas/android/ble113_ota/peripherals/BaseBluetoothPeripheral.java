@@ -30,6 +30,7 @@ public class BaseBluetoothPeripheral {
     private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
     private static final UUID CHARACTERISTIC_GROUP_1 = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
+    private static final UUID CHARACTERISTIC_TRIG_DELAY = UUID.fromString("d4864911-7fa2-4912-8fa6-9ee6cfc6cf8a");
 
     protected BlueteethDevice mPeripheral;
 
@@ -174,21 +175,19 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
-    /**
-     * Write Group Name
-     */
-    public void writeGroupName(OnCharacteristicWriteListener onCharacteristicWriteListener) {
-        //BlueteethUtils.writeData();
-        byte[] data;
-        data = new byte[]{0x00};
-        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
-    }
 
     /**
      * Read WIRE AND PIN#
      */
     public void readWireandPin(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_GPIN_AND_PINS, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    /**
+     * Read TRIG DELAY TIME
+     */
+    public void readTrigDelay(OnCharacteristicReadListener onCharacteristicReadListener){
+        BlueteethUtils.read(CHARACTERISTIC_TRIG_DELAY, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
 
