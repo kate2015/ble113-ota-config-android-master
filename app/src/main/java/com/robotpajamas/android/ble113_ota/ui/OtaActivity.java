@@ -262,6 +262,48 @@ public class OtaActivity extends Activity {
         //for(int i = strHex.length() - 1; i >= 0; i--)
     }
 
+    private String trigdelay(byte[] data){
+        String time = "";
+        String transmit_dura = "";
+
+        time = Integer.toString(data[0]);
+
+        switch (time)
+        {
+            case "0":
+                transmit_dura = "0 secs";
+                break;
+            case "1":
+                transmit_dura = "1 sec";
+                break;
+            case "2":
+                transmit_dura = "2 secs";
+                break;
+            case "3":
+                transmit_dura = "3 secs";
+                break;
+            case "4":
+                transmit_dura = "4 secs";
+                break;
+            case "5":
+                transmit_dura = "5 secs";
+                break;
+            case "6":
+                transmit_dura = "6 secs";
+                break;
+            case "7":
+                transmit_dura = "7 secs";
+                break;
+            case "8":
+                transmit_dura = "8 secs";
+                break;
+            case "9":
+                transmit_dura = "9 secs";
+                break;
+        }
+        return transmit_dura;
+
+    }
     private String transmitime(byte[] data){
 
         String time = "";
@@ -477,7 +519,6 @@ public class OtaActivity extends Activity {
                                     return;
                                 }
                                 runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), transmitime(data6))));
-                                //runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), ByteString.of(data6, 0, data6.length).hex())));
 
                                 // Read Wire And Pin
                                 mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
@@ -492,8 +533,19 @@ public class OtaActivity extends Activity {
                                         if (response != BlueteethResponse.NO_ERROR) {
                                             return;
                                         }
-                                        //runOnUiThread(() -> msetTXpower.setText(String.format(getString(R.string.set_txpower), ByteString.of(data8, 0, data8))));
                                         runOnUiThread(() -> mMBSNTextview.setText(String.format(getString(R.string.MB_SN) , ByteString.of(data8, 0 , data8.length).utf8())));
+                                        // --- Read MBSN ------//
+
+                                        //Read TrigDelay
+                                        //Read TrigDelay
+                                        mBluegigaPeripheral.readTrigDelay((respons9, data9) -> {
+                                            if (response != BlueteethResponse.NO_ERROR) {
+                                                return;
+                                            }
+                                            runOnUiThread(() -> mTrigDelay.setText(String.format(getString(R.string.trig_delay), trigdelay(data9))));
+                                            // ----- Read TrgDelay ------//
+                                        });
+
                                     }));
                                     //----- Set Stop pin ----- //
 
