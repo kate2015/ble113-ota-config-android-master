@@ -230,10 +230,17 @@ public class OtaActivity extends Activity {
 
     private byte[] hex2Byte(String hexString) {
         byte[] bytes = new byte[hexString.length()];
-        for (int i=0 ; i<bytes.length ; i++){
-            bytes[i] |= (i << Byte.parseByte(hexString));
-            //bytes[i] = Byte.parseByte(hexString);
+
+        char c = hexString.charAt(0);
+        if(c >= '0' && c <= '9')
+        {
+            c -= '0';
+        }else if (c >= 'A' && c <= 'F') {
+            c -= 'A';
+        }else if (c >= 'a' && c <= 'f') {
+            c -= 'a';
         }
+        bytes[0] = (byte) c;
 
         return bytes;
     }
@@ -304,6 +311,48 @@ public class OtaActivity extends Activity {
         return transmit_dura;
 
     }
+
+    private void timetotrigdelay(String Selected_item){
+        String time = "";
+        switch (Selected_item){
+            case "0 secs":
+                time = "0";
+                break;
+            case "1 secs":
+                time = "1";
+                break;
+            case "2 secs":
+                time = "2";
+                break;
+            case "3 secs":
+                time = "3";
+                break;
+            case "4 secs":
+                time = "4";
+                break;
+            case "5 secs":
+                time = "5";
+                break;
+            case "6 secs":
+                time = "6";
+                break;
+            case "7 secs":
+                time = "7";
+                break;
+            case "8 secs":
+                time = "8";
+                break;
+            case "9 secs":
+                time = "9";
+                break;
+            default:
+                time = "5";
+        }
+        byte[] data = hex2Byte(time);
+        mBluegigaPeripheral.setTrigDelay(data, response -> {});
+
+    }
+
     private String transmitime(byte[] data){
 
         String time = "";
@@ -461,6 +510,9 @@ public class OtaActivity extends Activity {
         spinnerDelay.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String Selected_item = spinnerDelay.getSelectedItem().toString();
+
+                timetotrigdelay(Selected_item);
 
                 Toast.makeText(OtaActivity.this, "You Set Trig Delay :" + trigdelay[position], Toast.LENGTH_SHORT).show();
             }
