@@ -10,6 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,6 +92,11 @@ public class OtaActivity extends Activity {
     private BluegigaPeripheral mBluegigaPeripheral;
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
+
+    private RadioGroup mRadioGroup, mRadGrpRegion;
+    private RadioButton mRadioButtonEnable,
+                        mRadioButtonDisable;
+
     //private boolean mStatus = true;
 
     /*/------
@@ -146,6 +153,7 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
     }
 
+    /*
     @OnClick(R.id.radioButton_dis)
     void disableRec(){
 
@@ -154,7 +162,7 @@ public class OtaActivity extends Activity {
     @OnClick(R.id.radioButton_en)
     void enableRec(){
 
-    }
+    }*/
 
     @OnClick(R.id.button_upload_010)
     void startFirmwareUpdate010() {
@@ -467,9 +475,9 @@ public class OtaActivity extends Activity {
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
 
-        //----- Set Tx Power Spinner ++ -----
+        //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
-        //
+
         final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
                 " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
                 " +1.0 dbm ", " +0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
@@ -502,10 +510,10 @@ public class OtaActivity extends Activity {
 
             }
         });
-        //----- Set Tx Power -- -----
+        //----------------- Set Tx Power -----------------
 
 
-        //----- Read/Write  Transmit Duration --------------
+        //+++++++++++++++ Read/Write  Transmit Duration +++++++++++++++
         Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
         //final String[] transmit = {"30 secs ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
         final String[] transmit = {"20 mins", "1 mins", "2mins", "5 mins", "10 mins", "15 mins","30 secs"};
@@ -529,9 +537,9 @@ public class OtaActivity extends Activity {
 
             }
         });
-        //----- Read/write Transmit Duration -----------------
+        //----------- Read/write Transmit Duration -----------------
 
-        //----- Read/ write Trig Delay -----------------------
+        //+++++++++++++++ Read/ write Trig Delay +++++++++++++++
 
         Spinner spinnerDelay = (Spinner)findViewById(R.id.trigdelay);
 
@@ -558,9 +566,17 @@ public class OtaActivity extends Activity {
 
         });
 
-        //----- Write Trig Delay -----------------------------
+        //------------- Write Trig Delay --------------------------
 
-        //----- Read Firmware Version ---------
+        //+++++++++++++++ Enable/Disable auto Stop Recording +++++++++++++++
+        mRadioButtonEnable = (RadioButton) findViewById(R.id.radioButton_en);
+        mRadioButtonDisable = (RadioButton) findViewById(R.id.radioButton_dis);
+
+        mRadGrpRegion = (RadioGroup) findViewById(R.id.mRadioGroup);
+
+        //--------------- Enable/Disable auto Stop Recording ---------------
+
+        //+++++++++++++++ Read Firmware Version +++++++++++++++
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
             if (response != BlueteethResponse.NO_ERROR) {
                 return;
