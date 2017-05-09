@@ -68,6 +68,9 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_trigdelay)
     TextView mTrigDelay;
 
+    @Bind(R.id.textView_autostop)
+    TextView mAutoStopRec;
+
     @Bind(R.id.textview_WireAndPin)
     //@Bind(R.id.WireAndPin)
     TextView mWireAndPin;
@@ -141,6 +144,16 @@ public class OtaActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
+    }
+
+    @OnClick(R.id.radioButton_dis)
+    void disableRec(){
+
+    }
+
+    @OnClick(R.id.radioButton_en)
+    void enableRec(){
+
     }
 
     @OnClick(R.id.button_upload_010)
@@ -219,6 +232,26 @@ public class OtaActivity extends Activity {
 
 
         return str_ids;
+    }
+
+    private String byte2string(byte[] data){
+        String button = "";
+        String value = "";
+
+        button = Integer.toString(data[0]);
+
+        switch (button)
+        {
+            case "1":
+                value = "Enable";
+                break;
+            case "0":
+                value = "Disable";
+                break;
+            default:
+                value = "Disable";
+        }
+        return value;
     }
 
     private String TwoBytesToShort(byte[] data) {
@@ -424,6 +457,7 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -546,7 +580,7 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length).utf8())));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length))));
                     //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
@@ -589,18 +623,26 @@ public class OtaActivity extends Activity {
                                         // --- Read MBSN ------//
 
                                         //Read TrigDelay
-                                        //Read TrigDelay
                                         mBluegigaPeripheral.readTrigDelay((respons9, data9) -> {
                                             if (response != BlueteethResponse.NO_ERROR) {
                                                 return;
                                             }
                                             runOnUiThread(() -> mTrigDelay.setText(String.format(getString(R.string.trig_delay), trigdelay(data9))));
-                                            // ----- Read TrgDelay ------//
+
+                                            //Read Auto Stop Recording
+                                            mBluegigaPeripheral.readAutoStopRecording((respons10, data10) -> {
+                                                if (response != BlueteethResponse.NO_ERROR) {
+                                                    return;
+                                                }
+                                                runOnUiThread(() -> mAutoStopRec.setText(String.format(getString(R.string.autostop), byte2string(data10))));
+
+                                            });
+                                            //----- Auto Stop Recording -----//
                                         });
+                                        // ----- Read TrigDelay ------//
 
                                     }));
                                     //----- Set Stop pin ----- //
-
 
                                 }));
                                 //-----Read Wire and pin -----

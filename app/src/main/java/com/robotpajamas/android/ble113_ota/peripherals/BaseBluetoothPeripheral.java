@@ -31,6 +31,7 @@ public class BaseBluetoothPeripheral {
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
     private static final UUID CHARACTERISTIC_GROUP_1 = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
     private static final UUID CHARACTERISTIC_TRIG_DELAY = UUID.fromString("d4864911-7fa2-4912-8fa6-9ee6cfc6cf8a");
+    private static final UUID CHARACTERISTIC_AUTO_STOPRECORDING = UUID.fromString("8bbb54e6-b6a9-493b-9736-a2b7c2283388");
 
     protected BlueteethDevice mPeripheral;
 
@@ -190,6 +191,12 @@ public class BaseBluetoothPeripheral {
         BlueteethUtils.read(CHARACTERISTIC_TRIG_DELAY, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
+    /**
+     *  Read Auto Stop Recording
+     */
+    public void readAutoStopRecording(OnCharacteristicReadListener onCharacteristicReadListener){
+        BlueteethUtils.read(CHARACTERISTIC_AUTO_STOPRECORDING, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
 
 }
 
