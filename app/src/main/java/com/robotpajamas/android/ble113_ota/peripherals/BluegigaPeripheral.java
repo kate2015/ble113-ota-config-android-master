@@ -108,6 +108,18 @@ public class BluegigaPeripheral extends BaseBluetoothPeripheral {
         mPeripheral.writeCharacteristic(data, CHARACTERISTIC_TRIG_DELAY, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
     }
 
+    /**
+     *
+     * @param data
+     * @param onCharacteristicWriteListener
+     * @param
+     * @return
+     */
+    public void setStopRec(byte[] data, @NonNull OnCharacteristicWriteListener onCharacteristicWriteListener){
+
+        mPeripheral.writeCharacteristic(data, CHARACTERISTIC_AUTO_STOPRECORDING, CUSTOM_SERVICE_INFORMATION, onCharacteristicWriteListener);
+    }
+
     public int updateFirmware(File  otaFile,
                               @NonNull OnFirmwarePacketUploadedListener onFirmwarePacketUploadedListener,
                               @NonNull OnFirmwareUpdateCompleteListener onFirmwareUpdateCompleteListener) {

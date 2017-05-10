@@ -93,9 +93,9 @@ public class OtaActivity extends Activity {
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
 
-    private RadioGroup mRadioGroup, mRadGrpRegion;
+    /*private RadioGroup mRadioGroup, mRadGrpRegion;
     private RadioButton mRadioButtonEnable,
-                        mRadioButtonDisable;
+                        mRadioButtonDisable;*/
 
     //private boolean mStatus = true;
 
@@ -153,16 +153,28 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
     }
 
-    /*
+
     @OnClick(R.id.radioButton_dis)
     void disableRec(){
+        //RadioButton mRadioButtonDisable = (RadioButton) findViewById(R.id.radioButton_dis);
+        //String input = mRadioButtonDisable.getText().toString();
+        byte[] value1 = {0};
+
+        //if (mRadioButtonDisable.isChecked())
+            mBluegigaPeripheral.setStopRec(value1, response -> {});
+
 
     }
 
     @OnClick(R.id.radioButton_en)
     void enableRec(){
+        //RadioButton mRadioButtonEnable = (RadioButton) findViewById(R.id.radioButton_en);
+        //String input = mRadioButtonEnable.getText().toString();
+        byte[] value1 = {1};
 
-    }*/
+        mBluegigaPeripheral.setStopRec(value1, response -> {});
+
+    }
 
     @OnClick(R.id.button_upload_010)
     void startFirmwareUpdate010() {
@@ -569,10 +581,21 @@ public class OtaActivity extends Activity {
         //------------- Write Trig Delay --------------------------
 
         //+++++++++++++++ Enable/Disable auto Stop Recording +++++++++++++++
-        mRadioButtonEnable = (RadioButton) findViewById(R.id.radioButton_en);
-        mRadioButtonDisable = (RadioButton) findViewById(R.id.radioButton_dis);
+        /*private void onRadioButtonClicked(View view){
 
-        mRadGrpRegion = (RadioGroup) findViewById(R.id.mRadioGroup);
+            boolean checked = ((RadioButton)view).isChecked();
+
+            switch (findViewById().getBottom()){
+                case R.id.radioButton_dis:
+                    if (checked)
+                        //
+                    break;
+                case R.id.radioButton_en:
+                    if (checked)
+                        //
+                    break;
+            }
+        }*/
 
         //--------------- Enable/Disable auto Stop Recording ---------------
 
@@ -596,8 +619,8 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length))));
-                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
+                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length))));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
