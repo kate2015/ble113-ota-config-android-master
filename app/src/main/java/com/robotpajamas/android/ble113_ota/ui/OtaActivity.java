@@ -28,6 +28,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InterruptedIOException;
 
 import javax.xml.datatype.DatatypeFactory;
 
@@ -275,10 +276,18 @@ public class OtaActivity extends Activity {
     }
 
     private String TwoBytesToShort(byte[] data) {
-        short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
+        //short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
+        //String txpower = Short.toString(sData);
+        String value = "";
+        int tx = (data[0] & 0xff) * 0x100;
+        int power = (data[1] & 0xff)/10;
 
+        if (tx == 0)
+            value = Integer.toString(power) + " dbm";
+        else
+            value = "-" + Integer.toString(power) + " dbm";
         //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
-        return Short.toString(sData);
+        return value;
     }
 
     private byte[] hex2Byte(String hexString) {
@@ -323,44 +332,10 @@ public class OtaActivity extends Activity {
     }
 
     private String trigdelay(byte[] data){
-        String time = "";
         String transmit_dura = "";
 
-        time = Integer.toString(data[0]);
+        transmit_dura = Integer.toString(data[0]) + " secs";
 
-        switch (time)
-        {
-            case "0":
-                transmit_dura = "0 secs";
-                break;
-            case "1":
-                transmit_dura = "1 sec";
-                break;
-            case "2":
-                transmit_dura = "2 secs";
-                break;
-            case "3":
-                transmit_dura = "3 secs";
-                break;
-            case "4":
-                transmit_dura = "4 secs";
-                break;
-            case "5":
-                transmit_dura = "5 secs";
-                break;
-            case "6":
-                transmit_dura = "6 secs";
-                break;
-            case "7":
-                transmit_dura = "7 secs";
-                break;
-            case "8":
-                transmit_dura = "8 secs";
-                break;
-            case "9":
-                transmit_dura = "9 secs";
-                break;
-        }
         return transmit_dura;
 
     }
