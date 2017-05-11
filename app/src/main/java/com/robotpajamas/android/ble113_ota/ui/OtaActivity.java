@@ -278,15 +278,21 @@ public class OtaActivity extends Activity {
     private String TwoBytesToShort(byte[] data) {
         //short sData = (short) ((short)((data[0] & 0xff) * 0x100) + (short)(data[1] & 0xff));
         //String txpower = Short.toString(sData);
-        String value = "";
-        int tx = (data[0] & 0xff) * 0x100;
-        int power = (data[1] & 0xff)/10;
 
-        if (tx == 0)
-            value = Integer.toString(power) + " dbm";
-        else
-            value = "-" + Integer.toString(power) + " dbm";
+
+        String value = "";
+        
         //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
+        return value;
+    }
+
+    private String txpowertodbm(byte[] data){
+        String value = "";
+
+        float power = (float) (data[1]) /10;
+
+        value = Float.toString(power)  + " dbm";
+
         return value;
     }
 
@@ -331,12 +337,22 @@ public class OtaActivity extends Activity {
         //for(int i = strHex.length() - 1; i >= 0; i--)
     }
 
+
+
     private String trigdelay(byte[] data){
         String transmit_dura = "";
 
         transmit_dura = Integer.toString(data[0]) + " secs";
 
         return transmit_dura;
+
+    }
+
+    private void dbmtotxpower(String dbm){
+        //String dbm = "";
+
+        byte[] data = hex2Byte(dbm);
+        //mBluegigaPeripheral.setTxpower(data, response -> {});
 
     }
 
@@ -465,9 +481,9 @@ public class OtaActivity extends Activity {
         //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
 
-        final String[] txpower = {" +8.0 dbm ", " +7.5 dbm ", " +7.0 dbm ", " +6.5 dbm ", " +6.0 dbm ", " +5.5 dbm ", " +5.0 dbm ",
-                " +5.0 dbm ", " +4.5 dbm ", " +4.0 dbm ", " +3.5 dbm ", " +3.0 dbm ", " +2.5 dbm ", " +2.0 dbm ", " +1.5 dbm ",
-                " +1.0 dbm ", " +0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
+        final String[] txpower = {" 8.0 dbm ", " 7.5 dbm ", " 7.0 dbm ", " 6.5 dbm ", " 6.0 dbm ", " 5.5 dbm ", " 5.0 dbm ",
+                " 5.0 dbm ", " 4.5 dbm ", " 4.0 dbm ", " 3.5 dbm ", " 3.0 dbm ", " 2.5 dbm ", " 2.0 dbm ", " 1.5 dbm ",
+                " 1.0 dbm ", " 0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
                 " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
                 " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
         ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
@@ -476,20 +492,14 @@ public class OtaActivity extends Activity {
 
         spinnerTx.setAdapter(txpowerList);
 
-        /*ArrayAdapter<CharSequence> adapter = new ArrayAdapter<>(OtaActivity.this,
-                R.array.txpower_array,
-                android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        //adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerTx.setAdapter(adapter);
-        */
-
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String selected_item = spinnerTx.getSelectedItem().toString();
 
-                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + txpower[position], Toast.LENGTH_SHORT).show();
+                dbmtotxpower(selected_item);
+
+                Toast.makeText(OtaActivity.this, "You Set TX Power :" + txpower[position], Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -502,8 +512,8 @@ public class OtaActivity extends Activity {
 
         //+++++++++++++++ Read/Write  Transmit Duration +++++++++++++++
         Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
-        //final String[] transmit = {"30 secs ", " 1 mins ", " 2mins ", " 5 mins ", " 10 mins ", " 15 mins "," 20 mins "};
-        final String[] transmit = {"20 mins", "1 mins", "2mins", "5 mins", "10 mins", "15 mins","30 secs"};
+        final String[] transmit = {"30 secs ", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","20 mins"};
+        //final String[] transmit = {"20 mins", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","30 secs"};
         ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 transmit);
@@ -530,7 +540,7 @@ public class OtaActivity extends Activity {
 
         Spinner spinnerDelay = (Spinner)findViewById(R.id.trigdelay);
 
-        final String[] trigdelay = {"0 secs", "1 secs", "2 secs", "3 secs", "4 secs", "5 secs", "6secs", "7secs", "8secs", "9secs"};
+        final String[] trigdelay = {"5 secs", "6 secs", "7 secs", "8 secs", "9 secs", "0 secs", "1 secs", "2 secs", "3 secs", "4 secs"};
         ArrayAdapter<String> trigdelayList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
                 trigdelay);
@@ -594,8 +604,8 @@ public class OtaActivity extends Activity {
                         return;
                     }
 
-                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of(data2, 0, data2.length))));
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", TwoBytesToShort(data2))));
+                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of((float)(data2/10), 0, data2.length))));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", txpowertodbm(data2))));
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
