@@ -281,7 +281,7 @@ public class OtaActivity extends Activity {
 
 
         String value = "";
-        
+
         //short sData = (short)((data[0] & (short)(0xff)) * (short)(0x100);// + (short)(data[1] & (short)0xff));
         return value;
     }
@@ -349,10 +349,18 @@ public class OtaActivity extends Activity {
     }
 
     private void dbmtotxpower(String dbm){
-        //String dbm = "";
 
-        byte[] data = hex2Byte(dbm);
-        //mBluegigaPeripheral.setTxpower(data, response -> {});
+        byte[] tx = new byte[dbm.length()];
+        int tx_id = 0;
+        
+        for(int i = dbm.length() - 1; i >= 0; i --)
+        {
+            char value = dbm.charAt(i);
+
+        }
+
+
+        //mBluegigaPeripheral.setTxpower(rc, response -> {});
 
     }
 
