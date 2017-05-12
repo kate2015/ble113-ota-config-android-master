@@ -350,17 +350,19 @@ public class OtaActivity extends Activity {
 
     private void dbmtotxpower(String dbm){
 
-        byte[] tx = new byte[dbm.length()];
-        int tx_id = 0;
-        
-        for(int i = dbm.length() - 1; i >= 0; i --)
-        {
-            char value = dbm.charAt(i);
+        StringBuilder sb = new StringBuilder();
 
-        }
+        sb.append(dbm.toString()); //Grab "xxx.dbm" String
 
+        String sel_cat = sb.delete(5,9).toString(); //remove "dbm"
+        float tx_f = (Float.parseFloat(sel_cat)) * 10; //revert dbm to value store in GATT table
 
-        //mBluegigaPeripheral.setTxpower(rc, response -> {});
+        //prepare byte[] data set into Bluetooth Characteristic
+        String tx_s = String.valueOf((int)tx_f);
+        byte tx_b = Byte.parseByte(tx_s);
+
+        byte[] data = {0, tx_b} ;
+        mBluegigaPeripheral.setTxpower(data, response -> {});
 
     }
 
@@ -491,7 +493,7 @@ public class OtaActivity extends Activity {
 
         final String[] txpower = {" 8.0 dbm ", " 7.5 dbm ", " 7.0 dbm ", " 6.5 dbm ", " 6.0 dbm ", " 5.5 dbm ", " 5.0 dbm ",
                 " 5.0 dbm ", " 4.5 dbm ", " 4.0 dbm ", " 3.5 dbm ", " 3.0 dbm ", " 2.5 dbm ", " 2.0 dbm ", " 1.5 dbm ",
-                " 1.0 dbm ", " 0.5 dbm ","     0 dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
+                " 1.0 dbm ", " 0.5 dbm "," 0   dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
                 " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
                 " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
         ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
