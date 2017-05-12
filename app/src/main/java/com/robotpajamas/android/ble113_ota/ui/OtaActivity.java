@@ -177,6 +177,8 @@ public class OtaActivity extends Activity {
 
     }
 
+    /*
+
     @OnClick(R.id.button_upload_010)
     void startFirmwareUpdate010() {
         mCurrentPacket = 0;
@@ -204,6 +206,8 @@ public class OtaActivity extends Activity {
 
         mProgressBar.setMax(mTotalNumberOfPackets);
     }
+
+    */
 
     public File createTempFile(BufferedSource inputSource) {
         File file;

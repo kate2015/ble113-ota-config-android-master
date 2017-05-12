@@ -240,7 +240,7 @@
 
 
 
-    <Button
+    <!--Button
         android:id="@+id/button_upload_010"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -260,7 +260,7 @@
         android:layout_marginTop="10dp"
         android:background="#9f9f9f"
         android:text="@string/button_upload_011"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff" /-->
 
 
 </LinearLayout>
