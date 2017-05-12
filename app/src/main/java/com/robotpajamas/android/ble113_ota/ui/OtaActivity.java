@@ -352,7 +352,7 @@ public class OtaActivity extends Activity {
 
         StringBuilder sb = new StringBuilder();
 
-        sb.append(dbm.toString()); //Grab "xxx.dbm" String
+        sb.append(dbm.toString()); //Grab String "-3.5 dbm"
 
         String sel_cat = sb.delete(5,9).toString(); //remove "dbm"
         float tx_f = (Float.parseFloat(sel_cat)) * 10; //revert dbm to value store in GATT table
@@ -368,40 +368,13 @@ public class OtaActivity extends Activity {
 
     private void timetotrigdelay(String Selected_item){
         String time = "";
-        switch (Selected_item){
-            case "0 secs":
-                time = "0";
-                break;
-            case "1 secs":
-                time = "1";
-                break;
-            case "2 secs":
-                time = "2";
-                break;
-            case "3 secs":
-                time = "3";
-                break;
-            case "4 secs":
-                time = "4";
-                break;
-            case "5 secs":
-                time = "5";
-                break;
-            case "6 secs":
-                time = "6";
-                break;
-            case "7 secs":
-                time = "7";
-                break;
-            case "8 secs":
-                time = "8";
-                break;
-            case "9 secs":
-                time = "9";
-                break;
-            default:
-                time = "5";
-        }
+
+        StringBuilder sb = new StringBuilder();
+
+
+        sb.append(Selected_item.toString());  //Grab String "5 secs"
+        time = sb.delete(2,6).toString(); //remove " secs"
+
         byte[] data = hex2Byte(time);
         mBluegigaPeripheral.setTrigDelay(data, response -> {});
 
@@ -491,10 +464,10 @@ public class OtaActivity extends Activity {
         //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
 
-        final String[] txpower = {" 8.0 dbm ", " 7.5 dbm ", " 7.0 dbm ", " 6.5 dbm ", " 6.0 dbm ", " 5.5 dbm ", " 5.0 dbm ",
+        final String[] txpower = {" -3.5 dbm ", " 8.0 dbm ", " 7.5 dbm ", " 7.0 dbm ", " 6.5 dbm ", " 6.0 dbm ", " 5.5 dbm ", " 5.0 dbm ",
                 " 5.0 dbm ", " 4.5 dbm ", " 4.0 dbm ", " 3.5 dbm ", " 3.0 dbm ", " 2.5 dbm ", " 2.0 dbm ", " 1.5 dbm ",
                 " 1.0 dbm ", " 0.5 dbm "," 0   dbm ", " -0.5 dbm", " -1.0 dbm ", " -1.5 dbm ", " -2.0 dbm ", " -2.5 dbm ",
-                " -3.0 dbm ", " -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
+                " -3.0 dbm "," -3.5 dbm ", " -4.0 dbm ", " -4.5 dbm ", " -5.0 dbm ", " -5.5 dbm ", " -6.0 dbm ", " -6.5 dbm ",
                 " -7.0 dbm ", " -7.5 dbm ", " -8.0 dbm "};
         ArrayAdapter<String> txpowerList = new ArrayAdapter<>(OtaActivity.this,
                 android.R.layout.simple_spinner_dropdown_item,
