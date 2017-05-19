@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:background="@color/white"
+tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
+<LinearLayout
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="#404040"
+        android:id="@+id/liveviwTopBar"
+        android:layout_weight="0.07">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/CameraListback"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="left|center_vertical"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:src="@drawable/back01"
+                android:layout_marginLeft="15dp"
+                android:elevation="0dp" />
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textSize="17dp"
+                android:textColor="#ffffff"
+                android:text="Information"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_horizontal"
+                android:layout_weight="0.7"
+                android:layout_gravity="center_vertical"
+                android:visibility="visible"
+                android:textStyle="bold"
+                />
+            <ImageButton
+                android:id="@+id/Battery_level"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitCenter"
+                android:layout_gravity="right|center_vertical"
+                android:visibility="invisible"/>
+        </LinearLayout>
+        <Button
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/CameraListback1"
+            android:background="@android:color/transparent"
+
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.93"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="90dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="80dp"
+            android:gravity="bottom|center"
+            android:layout_weight="0.9">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/p6logo"
+                android:background="@android:color/transparent"
+                android:layout_gravity="center_vertical"
+                android:scaleType="fitCenter"
+                android:layout_weight="0.5" />
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Copyright &#169; Getac"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Technology Corporation."
+                android:gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="All Rights Reserved."
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_horizontal"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="     "
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:gravity="center_horizontal"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SDK Ver."
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:gravity="center_horizontal"
+                android:id="@+id/SDKVersion"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Proc Ver."
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:gravity="center_horizontal"
+                android:id="@+id/version"
+                android:textStyle="bold"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:gravity="center_horizontal"
+                android:id="@+id/FWver"
+
+                />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
+</RelativeLayout>
+

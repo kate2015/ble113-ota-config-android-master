@@ -1,14 +1,18 @@
 package com.robotpajamas.android.ble113_ota.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.renderscript.Element;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -46,6 +50,8 @@ import static android.R.attr.onClick;
 
 public class OtaActivity extends Activity {
     private boolean mIsConnected;
+
+    Button btnloginabout1;
 
     @Bind(R.id.progressbar)
     ProgressBar mProgressBar;
@@ -176,6 +182,37 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setStopRec(value1, response -> {});
 
     }
+
+/*
+    @OnClick(R.drawable.about01_click)
+    void AboutButtonFunc()
+    {
+
+        setContentView(R.layout.about);
+        ImageButton imgbtn = (ImageButton)findViewById(R.drawable.about01_click);
+
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public boolean onClick(View v, MotionEvent event) {
+                Intent intent = new Intent();
+                intent.setClass(OtaActivity.this, AboutActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        /*btnloginabout1.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //SystemClock.sleep(100);
+                Intent i = new Intent(OtaActivity.this,AboutActivity.class);
+                startActivity(i);
+                finish();
+                //EnableButton(3);//change about button color
+            }
+        });/
+
+    }*/
+
 
     /*
 
@@ -465,6 +502,22 @@ public class OtaActivity extends Activity {
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
 
+        //AboutButtonFunc();
+        //+++++++++++++++ Clickinfo ++++++++++++++++++++++++++
+        /*setContentView(R.layout.about);
+        ImageButton imgbtn = (ImageButton)findViewById(R.drawable.about01_click);
+
+        imgbtn.setOnClickListener(new View.OnClickListener() {
+
+                Intent intent = new Intent();
+                intent.setClass(OtaActivity.this, AboutActivity.class);
+                startActivity(intent);
+
+        });*/
+
+        //--------------- Click info -------------------------
+
+
         //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
 
@@ -671,6 +724,7 @@ public class OtaActivity extends Activity {
             //----- Firmware Version ------
         });
     }
+
 
     @Override
     protected void onDestroy() {
