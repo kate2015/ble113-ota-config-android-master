@@ -4,13 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:divider="?android:dividerHorizontal"
+    android:showDividers="middle"
     android:weightSum="1">
 
     <!--Button
         android:id="@+id/Connect"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/connect"/-->
+        android:text="@string/connect"
+
+        android:divider="?android:dividerHorizontal"
+        android:showDividers="middle"/-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -59,6 +65,7 @@
         android:textStyle="bold"
         android:text="@string/model_name" />
 
+
     <TextView
         android:id="@+id/textview_firmware"
         android:layout_width="wrap_content"
@@ -74,6 +81,11 @@
         android:padding="5sp"
         android:textStyle="bold"
         android:text="@string/MB_SN" />
+
+    <!--ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#9f9f9f" /-->
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -140,6 +152,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
+
+    <!--ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:background="#9f9f9f" /-->
 
     <TextView
         android:id="@+id/textview_WireAndPin"
@@ -273,18 +290,12 @@
             android:textColor="#db5120"
             android:text="@string/autostop" />
 
-        <RadioButton
-            android:id="@+id/radioButton_en"
+        <Switch
+            android:id="@+id/switch_rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Enable"
-            />
+            android:textStyle="italic"/>
 
-        <RadioButton
-            android:id="@+id/radioButton_dis"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Disable" />
     </LinearLayout>
 
 

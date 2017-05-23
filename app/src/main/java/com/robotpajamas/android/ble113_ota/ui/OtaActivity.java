@@ -2,6 +2,7 @@ package com.robotpajamas.android.ble113_ota.ui;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.renderscript.Element;
@@ -11,12 +12,14 @@ import android.view.ViewDebug;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,6 +53,9 @@ import static android.R.attr.onClick;
 
 public class OtaActivity extends Activity {
     private boolean mIsConnected;
+    private Switch mySwitch;
+    public boolean switch_on;
+    //private TextView switchStatus;
 
     Button btnloginabout1;
 
@@ -93,6 +99,10 @@ public class OtaActivity extends Activity {
 
     @Bind(R.id.textview_GroupName)
     TextView mGroupName;
+
+    //@Bind(R.id.switch_rec)
+    //Switch mSwitchRec;
+
 
 
 
@@ -160,26 +170,42 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
     }
 
+    @OnClick(R.id.switch_rec)
+    void autostop_switch(){
 
-    @OnClick(R.id.radioButton_dis)
-    void disableRec(){
-        //RadioButton mRadioButtonDisable = (RadioButton) findViewById(R.id.radioButton_dis);
-        //String input = mRadioButtonDisable.getText().toString();
-        byte[] value1 = {0};
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-        //if (mRadioButtonDisable.isChecked())
-            mBluegigaPeripheral.setStopRec(value1, response -> {});
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
 
+                switch_on = mySwitch.isChecked();
+                if (switch_on){
 
-    }
+                    SharedPreferences.Editor editor = getSharedPreferences("Nita", MODE_PRIVATE).edit();
+                    editor.putBoolean("NameOfThingToSave", true);
+                    editor.commit();
 
-    @OnClick(R.id.radioButton_en)
-    void enableRec(){
-        //RadioButton mRadioButtonEnable = (RadioButton) findViewById(R.id.radioButton_en);
-        //String input = mRadioButtonEnable.getText().toString();
-        byte[] value1 = {1};
+                    byte[] value1 = {1};
+                    mySwitch.setText("On");
 
-        mBluegigaPeripheral.setStopRec(value1, response -> {});
+                    mBluegigaPeripheral.setStopRec(value1, response -> {});
+
+                }else {
+
+                    SharedPreferences.Editor editor = getSharedPreferences("Nita", MODE_PRIVATE).edit();
+                    editor.putBoolean("NameOfThingToSave", false);
+                    editor.commit();
+
+                    byte[] value1 = {0};
+                    mySwitch.setText("Off");
+
+                    mBluegigaPeripheral.setStopRec(value1, response -> {});
+                }
+
+            }
+
+        });
 
     }
 
@@ -499,8 +525,13 @@ public class OtaActivity extends Activity {
         setContentView(R.layout.activity_ota);
         ButterKnife.bind(this);
 
+
         String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
         mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
+
+        mySwitch = (Switch) findViewById(R.id.switch_rec);
+        SharedPreferences sharedPrefs = getSharedPreferences("Nita", MODE_PRIVATE);
+        mySwitch.setChecked(sharedPrefs.getBoolean("NameOfThingToSave", false));
 
         //AboutButtonFunc();
         //+++++++++++++++ Clickinfo ++++++++++++++++++++++++++
@@ -516,6 +547,41 @@ public class OtaActivity extends Activity {
         });*/
 
         //--------------- Click info -------------------------
+
+
+        /*/+++++++++++++++ Set Swtich Button +++++++++++++++
+
+        mySwitch = (Switch) findViewById(R.id.switch_rec);
+
+        mySwitch.setChecked(false);
+        //mySwitch.setOnClickListener(this);
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                autostop_switch();
+                /*if(isChecked){
+                    //byte[] value1 = {1};
+                    autostop_switch();
+                }else{
+                    byte[] value1 = {0};
+                    autostop_switch(value1);
+                }
+
+                if (mySwitch.isChecked()){
+                    byte[] value1 = {1};
+                    autostop_switch(value1);
+                }else {
+                    byte[] value1 = {0};
+                    autostop_switch(value1);
+                }/
+
+
+            }
+        });
+        //----------------- Set Switch Button -----------------*/
 
 
         //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
@@ -605,24 +671,6 @@ public class OtaActivity extends Activity {
 
         //------------- Write Trig Delay --------------------------
 
-        //+++++++++++++++ Enable/Disable auto Stop Recording +++++++++++++++
-        /*private void onRadioButtonClicked(View view){
-
-            boolean checked = ((RadioButton)view).isChecked();
-
-            switch (findViewById().getBottom()){
-                case R.id.radioButton_dis:
-                    if (checked)
-                        //
-                    break;
-                case R.id.radioButton_en:
-                    if (checked)
-                        //
-                    break;
-            }
-        }*/
-
-        //--------------- Enable/Disable auto Stop Recording ---------------
 
         //+++++++++++++++ Read Firmware Version +++++++++++++++
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
