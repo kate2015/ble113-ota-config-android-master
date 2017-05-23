@@ -48,14 +48,11 @@ import okio.ByteString;
 import okio.Okio;
 import timber.log.Timber;
 
-import static android.R.attr.onClick;
-
 
 public class OtaActivity extends Activity {
     private boolean mIsConnected;
     private Switch mySwitch;
     public boolean switch_on;
-    //private TextView switchStatus;
 
     Button btnloginabout1;
 
@@ -100,41 +97,12 @@ public class OtaActivity extends Activity {
     @Bind(R.id.textview_GroupName)
     TextView mGroupName;
 
-    //@Bind(R.id.switch_rec)
-    //Switch mSwitchRec;
-
-
 
 
     private BluegigaPeripheral mBluegigaPeripheral;
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
 
-    /*private RadioGroup mRadioGroup, mRadGrpRegion;
-    private RadioButton mRadioButtonEnable,
-                        mRadioButtonDisable;*/
-
-    //private boolean mStatus = true;
-
-    /*/------
-    @OnClick(R.id.Connect)
-    void connect() {
-        if (mIsConnected) {
-            //updateReceivedData(String.format("Attempting to disconnect from %s - %s...", mSamplePeripheral.getName(), mSamplePeripheral.getMacAddress()));
-            mBluegigaPeripheral.disconnect(isConnected -> {
-                //updateReceivedData("Connection Status: " + Boolean.toString(isConnected) + "\n");
-                mIsConnected = isConnected;
-                Timber.d("nitaa disconnected...");
-                //runOnUiThread(mConnectionRunnable);
-            });
-
-            //----- Read Firmware Version ---------
-            mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
-                if (response != BlueteethResponse.NO_ERROR) {
-                    return;
-                }
-                runOnUiThread(() -> mFirmwareTextview.setText(String.format(getString(R.string.firmware_version), ByteString.of(data, 0, data.length).utf8())));
-            });*/
 
 
     @OnClick(R.id.setrecpin)
@@ -547,41 +515,6 @@ public class OtaActivity extends Activity {
         });*/
 
         //--------------- Click info -------------------------
-
-
-        /*/+++++++++++++++ Set Swtich Button +++++++++++++++
-
-        mySwitch = (Switch) findViewById(R.id.switch_rec);
-
-        mySwitch.setChecked(false);
-        //mySwitch.setOnClickListener(this);
-        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-
-                autostop_switch();
-                /*if(isChecked){
-                    //byte[] value1 = {1};
-                    autostop_switch();
-                }else{
-                    byte[] value1 = {0};
-                    autostop_switch(value1);
-                }
-
-                if (mySwitch.isChecked()){
-                    byte[] value1 = {1};
-                    autostop_switch(value1);
-                }else {
-                    byte[] value1 = {0};
-                    autostop_switch(value1);
-                }/
-
-
-            }
-        });
-        //----------------- Set Switch Button -----------------*/
 
 
         //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
