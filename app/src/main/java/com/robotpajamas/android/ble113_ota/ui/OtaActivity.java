@@ -1,11 +1,12 @@
 package com.robotpajamas.android.ble113_ota.ui;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.renderscript.Element;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewDebug;
@@ -16,14 +17,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.robotpajamas.android.ble113_ota.R;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
@@ -49,12 +49,14 @@ import okio.Okio;
 import timber.log.Timber;
 
 
+
 public class OtaActivity extends Activity {
-    private boolean mIsConnected;
     private Switch mySwitch;
     public boolean switch_on;
-
-    Button btnloginabout1;
+    private ImageButton imgbtnDialog;
+    private BluegigaPeripheral mBluegigaPeripheral;
+    private int mTotalNumberOfPackets = 0;
+    private int mCurrentPacket = 0;
 
     @Bind(R.id.progressbar)
     ProgressBar mProgressBar;
@@ -96,13 +98,6 @@ public class OtaActivity extends Activity {
 
     @Bind(R.id.textview_GroupName)
     TextView mGroupName;
-
-
-
-    private BluegigaPeripheral mBluegigaPeripheral;
-    private int mTotalNumberOfPackets = 0;
-    private int mCurrentPacket = 0;
-
 
 
     @OnClick(R.id.setrecpin)
@@ -177,37 +172,6 @@ public class OtaActivity extends Activity {
 
     }
 
-/*
-    @OnClick(R.drawable.about01_click)
-    void AboutButtonFunc()
-    {
-
-        setContentView(R.layout.about);
-        ImageButton imgbtn = (ImageButton)findViewById(R.drawable.about01_click);
-
-        imgbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public boolean onClick(View v, MotionEvent event) {
-                Intent intent = new Intent();
-                intent.setClass(OtaActivity.this, AboutActivity.class);
-                startActivity(intent);
-            }
-        });
-
-        /*btnloginabout1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //SystemClock.sleep(100);
-                Intent i = new Intent(OtaActivity.this,AboutActivity.class);
-                startActivity(i);
-                finish();
-                //EnableButton(3);//change about button color
-            }
-        });/
-
-    }*/
-
-
     /*
 
     @OnClick(R.id.button_upload_010)
@@ -238,7 +202,7 @@ public class OtaActivity extends Activity {
         mProgressBar.setMax(mTotalNumberOfPackets);
     }
 
-    */
+
 
     public File createTempFile(BufferedSource inputSource) {
         File file;
@@ -252,6 +216,153 @@ public class OtaActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    */
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ota);
+        ButterKnife.bind(this);
+
+
+        String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
+        mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
+
+        //++++++++++++++ Keep Auto Stop Rec Switch button status +++++++++++++++++
+        mySwitch = (Switch) findViewById(R.id.switch_rec);
+        SharedPreferences sharedPrefs = getSharedPreferences("Nita", MODE_PRIVATE);
+        mySwitch.setChecked(sharedPrefs.getBoolean("NameOfThingToSave", false));
+        //-------------- Keep Auto Stop Rec Switch button status -----------------
+
+
+
+        //For information setting SW Version
+        initView();
+
+        //+++++++++++++++ Set Tx Power Spinner +++++++++++
+        setspinnerTX();
+        //----------------- Set Tx Power -----------------
+
+
+        //+++++++++++++++ Read/Write  Transmit Duration ++
+        getset_transmitDuration();
+        //----------- Read/write Transmit Duration -------
+
+        //+++++++++++++++ Read/ write Trig Delay +++++++++
+        readTrigDelay();
+        //------------- Write Trig Delay -----------------
+
+
+        //+++++++++++++++ Read Firmware Version +++++++++++++++
+        mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
+            if (response != BlueteethResponse.NO_ERROR) {
+                return;
+            }
+            runOnUiThread(() -> mFirmwareTextview.setText(String.format(getString(R.string.firmware_version), ByteString.of(data, 0, data.length).utf8())));
+
+            // /----- Read Model Name ----------------
+            mBluegigaPeripheral.readModelName(((response1, data1) -> {
+                if (response !=BlueteethResponse.NO_ERROR) {
+                    return;
+                }
+                runOnUiThread(() -> mModelnameTextview.setText(String.format("Model Name: %s", ByteString.of(data1, 0, data1.length).utf8())));
+
+                //-----  Read/Write  Tx Power Spinner -----
+                mBluegigaPeripheral.readTXpower((response2, data2) -> {
+                    if (response != BlueteethResponse.NO_ERROR) {
+                        return;
+                    }
+
+                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of((float)(data2/10), 0, data2.length))));
+                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", txpowertodbm(data2))));
+                    //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
+
+                    //----- Read Group Name ------
+                    mBluegigaPeripheral.readGroupName(((response3, data3) -> {
+                        if (response !=BlueteethResponse.NO_ERROR) {
+                            return;
+                        }
+                        runOnUiThread(() -> mGroupName.setText(String.format(getString(R.string.group_name), ByteString.of(data3, 0, data3.length).utf8())));
+
+                        //ReadGPINstop
+                        mBluegigaPeripheral.readGPINstop(((response5, data5) -> {
+                            if (response !=BlueteethResponse.NO_ERROR) {
+                                return;
+                            }
+                            //runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length))));
+                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin) , BitToInt(data5))));
+
+                            //-- Transmit Duration -----
+                            mBluegigaPeripheral.readTransmit(((response6, data6) -> {
+                                if (response !=BlueteethResponse.NO_ERROR) {
+                                    return;
+                                }
+                                runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), transmitime(data6))));
+
+                                // Read Wire And Pin
+                                mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
+                                    if (response !=BlueteethResponse.NO_ERROR) {
+                                        return;
+                                    }
+
+                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
+
+                                    // Read MBSN
+                                    mBluegigaPeripheral.readMBSN(((respons8, data8) -> {
+                                        if (response != BlueteethResponse.NO_ERROR) {
+                                            return;
+                                        }
+                                        runOnUiThread(() -> mMBSNTextview.setText(String.format(getString(R.string.MB_SN) , ByteString.of(data8, 0 , data8.length).utf8())));
+                                        // --- Read MBSN ------//
+
+                                        //Read TrigDelay
+                                        mBluegigaPeripheral.readTrigDelay((respons9, data9) -> {
+                                            if (response != BlueteethResponse.NO_ERROR) {
+                                                return;
+                                            }
+                                            runOnUiThread(() -> mTrigDelay.setText(String.format(getString(R.string.trig_delay), trigdelay(data9))));
+
+                                            //Read Auto Stop Recording
+                                            mBluegigaPeripheral.readAutoStopRecording((respons10, data10) -> {
+                                                if (response != BlueteethResponse.NO_ERROR) {
+                                                    return;
+                                                }
+                                                runOnUiThread(() -> mAutoStopRec.setText(String.format(getString(R.string.autostop), byte2string(data10))));
+
+                                            });
+                                            //----- Auto Stop Recording -----//
+                                        });
+                                        // ----- Read TrigDelay ------//
+
+                                    }));
+                                    //----- Set Stop pin ----- //
+
+                                }));
+                                //-----Read Wire and pin -----
+
+                            }));
+                            //----- Transmit Duration stop -----
+                        }));
+                        // ----- Read GPIN stop
+                    }));
+                    // ---- Read Group Name
+                });
+
+                //-------Model Name-------------------
+            }));
+            //----- Firmware Version ------
+        });
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBluegigaPeripheral.isConnected()) {
+            mBluegigaPeripheral.disconnect(null);
         }
     }
 
@@ -433,7 +544,7 @@ public class OtaActivity extends Activity {
             case "40":
                 transmit_dura = "2 mins";
                 break;
-            case "10":
+            case "01":
                 transmit_dura = "5 mins";
                 break;
             case "2":
@@ -486,38 +597,8 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
 
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ota);
-        ButterKnife.bind(this);
-
-
-        String macAddress = getIntent().getStringExtra(getString(R.string.extra_mac_address));
-        mBluegigaPeripheral = new BluegigaPeripheral(BlueteethManager.with(this).getPeripheral(macAddress));
-
-        mySwitch = (Switch) findViewById(R.id.switch_rec);
-        SharedPreferences sharedPrefs = getSharedPreferences("Nita", MODE_PRIVATE);
-        mySwitch.setChecked(sharedPrefs.getBoolean("NameOfThingToSave", false));
-
-        //AboutButtonFunc();
-        //+++++++++++++++ Clickinfo ++++++++++++++++++++++++++
-        /*setContentView(R.layout.about);
-        ImageButton imgbtn = (ImageButton)findViewById(R.drawable.about01_click);
-
-        imgbtn.setOnClickListener(new View.OnClickListener() {
-
-                Intent intent = new Intent();
-                intent.setClass(OtaActivity.this, AboutActivity.class);
-                startActivity(intent);
-
-        });*/
-
-        //--------------- Click info -------------------------
-
-
-        //+++++++++++++++ Set Tx Power Spinner +++++++++++++++
+    //Spinner for Txpower setting
+    void setspinnerTX(){
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
 
         final String[] txpower = {" -3.5 dbm ", " 8.0 dbm ", " 7.5 dbm ", " 7.0 dbm ", " 6.5 dbm ", " 6.0 dbm ", " 5.5 dbm ", " 5.0 dbm ",
@@ -546,37 +627,10 @@ public class OtaActivity extends Activity {
 
             }
         });
-        //----------------- Set Tx Power -----------------
+    }
 
-
-        //+++++++++++++++ Read/Write  Transmit Duration +++++++++++++++
-        Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
-        final String[] transmit = {"30 secs ", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","20 mins"};
-        //final String[] transmit = {"20 mins", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","30 secs"};
-        ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
-                android.R.layout.simple_spinner_dropdown_item,
-                transmit);
-
-        spinnerTransmit.setAdapter(transmitList);
-        spinnerTransmit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String Selected_item = spinnerTransmit.getSelectedItem().toString();
-
-                timetoTransmit(Selected_item);
-
-                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-        //----------- Read/write Transmit Duration -----------------
-
-        //+++++++++++++++ Read/ write Trig Delay +++++++++++++++
-
+    // Spinner for Read TrigDelay
+    void readTrigDelay(){
         Spinner spinnerDelay = (Spinner)findViewById(R.id.trigdelay);
 
         final String[] trigdelay = {"5 secs", "6 secs", "7 secs", "8 secs", "9 secs", "0 secs", "1 secs", "2 secs", "3 secs", "4 secs"};
@@ -601,120 +655,61 @@ public class OtaActivity extends Activity {
             }
 
         });
+    }
 
-        //------------- Write Trig Delay --------------------------
+    // Spinner for transmitDuration
+    void getset_transmitDuration(){
+        Spinner spinnerTransmit = (Spinner)findViewById(R.id.transmit);
+        final String[] transmit = {"30 secs ", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","20 mins"};
+        //final String[] transmit = {"20 mins", "1 mins", "2 mins", "5 mins", "10 mins", "15 mins","30 secs"};
+        ArrayAdapter<String> transmitList = new ArrayAdapter<>(OtaActivity.this,
+                android.R.layout.simple_spinner_dropdown_item,
+                transmit);
 
+        spinnerTransmit.setAdapter(transmitList);
+        spinnerTransmit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String Selected_item = spinnerTransmit.getSelectedItem().toString();
 
-        //+++++++++++++++ Read Firmware Version +++++++++++++++
-        mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
-            if (response != BlueteethResponse.NO_ERROR) {
-                return;
+                timetoTransmit(Selected_item);
+
+                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
             }
-            runOnUiThread(() -> mFirmwareTextview.setText(String.format(getString(R.string.firmware_version), ByteString.of(data, 0, data.length).utf8())));
 
-            // /----- Read Model Name ----------------
-            mBluegigaPeripheral.readModelName(((response1, data1) -> {
-                if (response !=BlueteethResponse.NO_ERROR) {
-                    return;
-                }
-                runOnUiThread(() -> mModelnameTextview.setText(String.format("Model Name: %s", ByteString.of(data1, 0, data1.length).utf8())));
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
-                //-----  Read/Write  Tx Power Spinner -----
-                mBluegigaPeripheral.readTXpower((response2, data2) -> {
-                    if (response != BlueteethResponse.NO_ERROR) {
-                        return;
-                    }
-
-                    //runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", ByteString.of((float)(data2/10), 0, data2.length))));
-                    runOnUiThread(() -> mTXpower.setText(String.format("Tx Power: %s", txpowertodbm(data2))));
-                    //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
-
-                    //----- Read Group Name ------
-                    mBluegigaPeripheral.readGroupName(((response3, data3) -> {
-                        if (response !=BlueteethResponse.NO_ERROR) {
-                            return;
-                        }
-                        runOnUiThread(() -> mGroupName.setText(String.format(getString(R.string.group_name), ByteString.of(data3, 0, data3.length).utf8())));
-
-                        //ReadGPINstop
-                        mBluegigaPeripheral.readGPINstop(((response5, data5) -> {
-                            if (response !=BlueteethResponse.NO_ERROR) {
-                                return;
-                            }
-                            //runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length))));
-                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin) , BitToInt(data5))));
-
-                            //-- Transmit Duration -----
-                            mBluegigaPeripheral.readTransmit(((response6, data6) -> {
-                                if (response !=BlueteethResponse.NO_ERROR) {
-                                    return;
-                                }
-                                runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), transmitime(data6))));
-
-                                // Read Wire And Pin
-                                mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
-                                    if (response !=BlueteethResponse.NO_ERROR) {
-                                        return;
-                                    }
-
-                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
-
-                                    // Read MBSN
-                                    mBluegigaPeripheral.readMBSN(((respons8, data8) -> {
-                                        if (response != BlueteethResponse.NO_ERROR) {
-                                            return;
-                                        }
-                                        runOnUiThread(() -> mMBSNTextview.setText(String.format(getString(R.string.MB_SN) , ByteString.of(data8, 0 , data8.length).utf8())));
-                                        // --- Read MBSN ------//
-
-                                        //Read TrigDelay
-                                        mBluegigaPeripheral.readTrigDelay((respons9, data9) -> {
-                                            if (response != BlueteethResponse.NO_ERROR) {
-                                                return;
-                                            }
-                                            runOnUiThread(() -> mTrigDelay.setText(String.format(getString(R.string.trig_delay), trigdelay(data9))));
-
-                                            //Read Auto Stop Recording
-                                            mBluegigaPeripheral.readAutoStopRecording((respons10, data10) -> {
-                                                if (response != BlueteethResponse.NO_ERROR) {
-                                                    return;
-                                                }
-                                                runOnUiThread(() -> mAutoStopRec.setText(String.format(getString(R.string.autostop), byte2string(data10))));
-
-                                            });
-                                            //----- Auto Stop Recording -----//
-                                        });
-                                        // ----- Read TrigDelay ------//
-
-                                    }));
-                                    //----- Set Stop pin ----- //
-
-                                }));
-                                //-----Read Wire and pin -----
-
-                            }));
-                            //----- Transmit Duration stop -----
-                        }));
-                        // ----- Read GPIN stop
-                    }));
-                    // ---- Read Group Name
-                });
-
-                //-------Model Name-------------------
-            }));
-            //----- Firmware Version ------
+            }
         });
     }
 
+    //For information setting SW Version
+    private void initView() {
+        imgbtnDialog = (ImageButton) findViewById(R.id.version_button);
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mBluegigaPeripheral.isConnected()) {
-            mBluegigaPeripheral.disconnect(null);
-        }
+        imgbtnDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                customDialog();
+            }
+        });
+
     }
 
+    private void customDialog(){
+        final View item = LayoutInflater.from(OtaActivity.this).inflate(R.layout.about, null);
+        new AlertDialog.Builder(OtaActivity.this)
+                .setView(item)
+                /*.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        EditText editText = (EditText) item.findViewById(R.id.edit_text);
+                        Toast.makeText(getApplicationContext(), getString(R.string.hi) + editText.getText().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })*/
+                .show();
+    }
 
 
 

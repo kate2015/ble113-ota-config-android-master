@@ -24,7 +24,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
             android:layout_centerVertical="true"
 
             android:orientation="horizontal">
-            <ImageButton
+            <!--ImageButton
                 android:id="@+id/CameraListback"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -33,7 +33,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
                 android:scaleType="fitCenter"
                 android:src="@drawable/back01"
                 android:layout_marginLeft="15dp"
-                android:elevation="0dp" />
+                android:elevation="0dp" /-->
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -84,7 +84,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/p6logo"
+                android:src="@mipmap/bwc"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:scaleType="fitCenter"
@@ -133,18 +133,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SDK Ver."
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:textSize="16dp"
-                android:gravity="center_horizontal"
-                android:id="@+id/SDKVersion"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Proc Ver."
+                android:text="TriggerBox V1.0.1"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:textSize="16dp"

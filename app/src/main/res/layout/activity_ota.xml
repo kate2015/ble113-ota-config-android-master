@@ -25,7 +25,7 @@
         android:layout_weight="0.18"
         android:orientation="horizontal">
         <ImageButton
-            android:id="@+id/login_about_button"
+            android:id="@+id/version_button"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="left|center_vertical"
@@ -294,7 +294,7 @@
             android:id="@+id/switch_rec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textStyle="normal"/>
+            android:textStyle="italic"/>
 
     </LinearLayout>
 
