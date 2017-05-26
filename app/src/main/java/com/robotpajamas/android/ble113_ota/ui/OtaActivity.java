@@ -684,7 +684,7 @@ public class OtaActivity extends Activity {
         });
     }
 
-    //For information setting SW Version
+    //++ For information setting SW Version
     private void initView() {
         imgbtnDialog = (ImageButton) findViewById(R.id.version_button);
 
@@ -710,6 +710,7 @@ public class OtaActivity extends Activity {
                 })*/
                 .show();
     }
+    //-- For information setting SW Version
 
 
 
