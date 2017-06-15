@@ -13,11 +13,9 @@
         android:textSize="16sp" />
 
     <EditText
-        android:id="@+id/filter_bar"
+        android:id="@+id/EditText01"
         android:layout_height="wrap_content"
         android:layout_width="fill_parent"
-        android:imeOptions="actionDone"
-        android:maxLines="1"
         android:hint="search"/>
 
     <android.support.v4.widget.SwipeRefreshLayout

@@ -8,8 +8,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 //import android.text.TextUtils;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.appindexing.Action;
@@ -20,6 +24,10 @@ import com.robotpajamas.android.ble113_ota.R;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import timber.log.Timber;
@@ -28,6 +36,17 @@ public class MainActivity extends ListActivity {
 
     private static final int REQ_BLUETOOTH_ENABLE = 1000;
     private static final int DEVICE_SCAN_MILLISECONDS = 10000;
+
+    // ++ for filter
+    private EditText et;
+    int textlength = 0;
+    private ArrayList<String> array_sort;
+
+    DeviceScanListAdapter leDeviceScanListAdapter;
+
+    List<BlueteethDevice> bledevices = new ArrayList<>();
+    // -- for filter
+
 
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefresh;
@@ -50,10 +69,67 @@ public class MainActivity extends ListActivity {
 
         mSwipeRefresh.setOnRefreshListener(this::startScanning);
         mDeviceAdapter = new DeviceScanListAdapter(this);
+
+
+        //filter ++
+        et = (EditText) findViewById(R.id.EditText01);
+        //leDeviceScanListAdapter
+        //List<BlueteethDevice> array_sort = new ArrayList<>();
+
+        //filter --
+
+        et.addTextChangedListener(new TextWatcher() {
+            public void onTextChanged(CharSequence s,
+                                      int start, int before, int count)
+            {
+                // TODO
+                textlength = et.getText().length();
+                mDeviceAdapter.clear();
+
+
+                for (int i = 0; i < mDeviceAdapter.getCount(); i++)
+                {
+
+                    if (mDeviceAdapter.getItem(i).getName().toLowerCase().contains(et.getText().toString().toLowerCase().trim()))
+                        //array_sort.add(mDeviceAdapter.getItem(i));
+                    mDeviceAdapter.add(mDeviceAdapter.getItem(i));
+                    //count ++;
+
+                }
+
+            }
+
+            public void beforeTextChanged(CharSequence s,
+                                          int start, int count, int after)
+            {
+                // Abstract Method of TextWatcher Interface.
+            }
+
+            public void afterTextChanged(Editable s)
+            {
+                // Abstract Method of TextWatcher Interface.
+
+            }
+
+        });
+
+        //setListAdapter(mDeviceAdapter);
+        //leDeviceScanListAdapter.notifyDataSetChanged();
+        // --- Filter
+
+
         setListAdapter(mDeviceAdapter);
+
         // ATTENTION: This was auto-generated to implement the App Indexing API.
         // See https://g.co/AppIndexing/AndroidStudio for more information.
         client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
+
+
+
+
+        // Start automatic scan
+        //mSwipeRefresh.setRefreshing(true);
     }
 
     @Override

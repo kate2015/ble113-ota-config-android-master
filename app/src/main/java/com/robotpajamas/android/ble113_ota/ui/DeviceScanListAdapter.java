@@ -20,10 +20,12 @@ public class DeviceScanListAdapter extends BaseAdapter {
 
     private final LayoutInflater mLayoutInflater;
     private List<BlueteethDevice> mDevices;
+    private List<BlueteethDevice> bleDevices; // for filter
 
     public DeviceScanListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mDevices = new ArrayList<>();
+        bleDevices = new ArrayList<>(); // for filter
     }
 
     @Override
@@ -72,12 +74,14 @@ public class DeviceScanListAdapter extends BaseAdapter {
 
         if (!isAlreadyInList) {
             mDevices.add(device);
+            bleDevices.add(device); //for filter
             notifyDataSetChanged();
         }
     }
 
     public void clear() {
         mDevices.clear();
+        bleDevices.clear(); //for filter
         notifyDataSetChanged();
     }
 
