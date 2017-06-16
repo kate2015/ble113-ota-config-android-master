@@ -27,6 +27,7 @@ import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +39,7 @@ public class MainActivity extends ListActivity {
     private static final int DEVICE_SCAN_MILLISECONDS = 10000;
 
     // ++ for filter
-    private EditText et;
+
     int textlength = 0;
     private ArrayList<String> array_sort;
 
@@ -72,30 +73,16 @@ public class MainActivity extends ListActivity {
 
 
         //filter ++
-        et = (EditText) findViewById(R.id.EditText01);
-        //leDeviceScanListAdapter
-        //List<BlueteethDevice> array_sort = new ArrayList<>();
+        final EditText searchET = (EditText) findViewById(R.id.EditText01);
 
         //filter --
 
-        et.addTextChangedListener(new TextWatcher() {
+        searchET.addTextChangedListener(new TextWatcher() {
             public void onTextChanged(CharSequence s,
                                       int start, int before, int count)
             {
                 // TODO
-                textlength = et.getText().length();
-                mDeviceAdapter.clear();
 
-
-                for (int i = 0; i < mDeviceAdapter.getCount(); i++)
-                {
-
-                    if (mDeviceAdapter.getItem(i).getName().toLowerCase().contains(et.getText().toString().toLowerCase().trim()))
-                        //array_sort.add(mDeviceAdapter.getItem(i));
-                    mDeviceAdapter.add(mDeviceAdapter.getItem(i));
-                    //count ++;
-
-                }
 
             }
 
@@ -103,11 +90,16 @@ public class MainActivity extends ListActivity {
                                           int start, int count, int after)
             {
                 // Abstract Method of TextWatcher Interface.
+
             }
 
-            public void afterTextChanged(Editable s)
+            public void afterTextChanged(Editable arg0)
             {
                 // Abstract Method of TextWatcher Interface.
+                //String text = searchET.getText().toString().toLowerCase(Locale.getDefault());
+                String text = searchET.getText().toString().toLowerCase(Locale.getDefault());
+                if (text != null)
+                    mDeviceAdapter.filter(text);
 
             }
 

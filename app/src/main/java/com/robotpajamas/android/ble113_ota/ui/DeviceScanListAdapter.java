@@ -12,6 +12,7 @@ import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,13 +20,17 @@ import butterknife.ButterKnife;
 public class DeviceScanListAdapter extends BaseAdapter {
 
     private final LayoutInflater mLayoutInflater;
-    private List<BlueteethDevice> mDevices;
-    private List<BlueteethDevice> bleDevices; // for filter
+    private List<BlueteethDevice> mDevices;   //for loading main list
+
+    //for filter
+    private List<BlueteethDevice> arraylist = null;  // for loading  filter data
 
     public DeviceScanListAdapter(Context context) {
         mLayoutInflater = LayoutInflater.from(context);
         mDevices = new ArrayList<>();
-        bleDevices = new ArrayList<>(); // for filter
+
+        arraylist = new ArrayList<>();
+
     }
 
     @Override
@@ -74,14 +79,13 @@ public class DeviceScanListAdapter extends BaseAdapter {
 
         if (!isAlreadyInList) {
             mDevices.add(device);
-            bleDevices.add(device); //for filter
+            arraylist.add(device);
             notifyDataSetChanged();
         }
     }
 
     public void clear() {
         mDevices.clear();
-        bleDevices.clear(); //for filter
         notifyDataSetChanged();
     }
 
@@ -98,5 +102,25 @@ public class DeviceScanListAdapter extends BaseAdapter {
 
         public DeviceHolder(View view) {
             ButterKnife.bind(this, view);}
+    }
+
+    // put below code (method) in Adapter class
+    public void filter(String charText) {
+        charText = charText.toLowerCase(Locale.getDefault());
+        mDevices.clear();
+        if (charText.length() == 0) {
+            mDevices.addAll(arraylist);
+        }
+        else
+        {
+            for (BlueteethDevice wp : arraylist) {
+                if (wp.getName() == null)
+                    continue;
+                if (wp.getName().toLowerCase(Locale.getDefault()).contains(charText)) {
+                        mDevices.add(wp);
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }
