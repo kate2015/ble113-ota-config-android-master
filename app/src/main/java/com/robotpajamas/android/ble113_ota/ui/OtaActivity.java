@@ -181,6 +181,11 @@ public class OtaActivity extends Activity {
         Intent i = new Intent();
         i.setClass(OtaActivity.this, GroupNameActivity.class);
 
+        //new bundle , pass data to GroupnameActivity
+        //Bundle b = new Bundle();
+        //b.putAll(mBluegigaPeripheral);
+
+
         startActivity(i);
         //this.finish();
         //overridePendingTransition(R.transition.activity);
@@ -268,7 +273,6 @@ public class OtaActivity extends Activity {
         readTrigDelay();
         //------------- Write Trig Delay -----------------
 
-        //JumptoGroupNamePage();
 
         //+++++++++++++++ Read Firmware Version +++++++++++++++
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {
@@ -633,7 +637,7 @@ public class OtaActivity extends Activity {
 
                 dbmtotxpower(selected_item);
 
-                Toast.makeText(OtaActivity.this, "You Set TX Power :" + txpower[position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OtaActivity.this, "You Set TX Power :" + txpower[position], Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -660,7 +664,7 @@ public class OtaActivity extends Activity {
 
                 timetotrigdelay(Selected_item);
 
-                Toast.makeText(OtaActivity.this, "You Set Trig Delay :" + trigdelay[position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OtaActivity.this, "You Set Trig Delay :" + trigdelay[position], Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -688,7 +692,7 @@ public class OtaActivity extends Activity {
 
                 timetoTransmit(Selected_item);
 
-                Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
+                //Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
             }
 
             @Override

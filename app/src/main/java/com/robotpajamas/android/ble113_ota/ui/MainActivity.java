@@ -38,16 +38,6 @@ public class MainActivity extends ListActivity {
     private static final int REQ_BLUETOOTH_ENABLE = 1000;
     private static final int DEVICE_SCAN_MILLISECONDS = 10000;
 
-    // ++ for filter
-
-    int textlength = 0;
-    private ArrayList<String> array_sort;
-
-    DeviceScanListAdapter leDeviceScanListAdapter;
-
-    List<BlueteethDevice> bledevices = new ArrayList<>();
-    // -- for filter
-
 
     @Bind(R.id.swiperefresh)
     SwipeRefreshLayout mSwipeRefresh;
