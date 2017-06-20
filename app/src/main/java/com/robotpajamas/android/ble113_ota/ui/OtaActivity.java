@@ -2,6 +2,7 @@ package com.robotpajamas.android.ble113_ota.ui;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -172,6 +173,18 @@ public class OtaActivity extends Activity {
 
     }
 
+
+    @OnClick(R.id.GP_Button)
+    void JumptoGroupNamePage() {
+        ImageButton j = (ImageButton) findViewById(R.id.GP_Button);
+
+        Intent i = new Intent();
+        i.setClass(OtaActivity.this, GroupNameActivity.class);
+
+        startActivity(i);
+        //this.finish();
+        //overridePendingTransition(R.transition.activity);
+    }
     /*
 
     @OnClick(R.id.button_upload_010)
@@ -255,6 +268,7 @@ public class OtaActivity extends Activity {
         readTrigDelay();
         //------------- Write Trig Delay -----------------
 
+        //JumptoGroupNamePage();
 
         //+++++++++++++++ Read Firmware Version +++++++++++++++
         mBluegigaPeripheral.readFirmwareVersion((response, data) -> {

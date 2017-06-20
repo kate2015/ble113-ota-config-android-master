@@ -15,7 +15,7 @@ import java.io.File;
 import timber.log.Timber;
 
 /**
- * Created by rsbu-aarontsai on 2017/2/22.
+ * Created by nita.huang on 2017/2/22.
  */
 
 public class SplashActivity extends MainActivity {

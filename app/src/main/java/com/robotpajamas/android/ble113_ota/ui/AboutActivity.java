@@ -9,7 +9,7 @@ import android.widget.ImageButton;
 
 import com.robotpajamas.android.ble113_ota.R;
 /**
- * Created by rsbu-aarontsai on 2017/5/18.
+ * Created by nita.huang on 2017/5/18.
  */
 
 public class AboutActivity extends Activity {
