@@ -1,5 +1,7 @@
 package com.robotpajamas.android.ble113_ota.peripherals;
 
+import android.support.annotation.NonNull;
+
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 import com.robotpajamas.android.ble113_ota.listeners.OnBondingChangedListener;
@@ -29,7 +31,19 @@ public class BaseBluetoothPeripheral {
     private static final UUID CHARACTERISTIC_TRANSMITDURATION = UUID.fromString("56a3688c-211e-48da-8676-f52d7053e8a8");
     private static final UUID CHARACTERISTIC_GPIN_AND_PINS = UUID.fromString("7b68f16b-543a-4403-b5d3-85d7e1bc2f3f");
     private static final UUID CHARACTERISTIC_GPIN_STOP_CMD_PINS = UUID.fromString("6147aac7-e1eb-41aa-b0b7-322d6bd1c755");
+
     private static final UUID CHARACTERISTIC_GROUP_1 = UUID.fromString("b13b5d92-74d2-4477-885b-9010108b20e5");
+    private static final UUID CHARACTERISTIC_GROUP_2 = UUID.fromString("ddcadc9b-d770-4686-aab7-147bf410dbdc");
+    private static final UUID CHARACTERISTIC_GROUP_3 = UUID.fromString("51231aa8-5223-4161-99a8-150a2edfd2c4");
+    private static final UUID CHARACTERISTIC_GROUP_4 = UUID.fromString("c72eda67-5a5f-4700-aaab-c1d2aa29483a");
+    private static final UUID CHARACTERISTIC_GROUP_5 = UUID.fromString("a4c1bf38-13b5-4808-b04e-be07763fb3d9");
+
+    private static final UUID CHARACTERISTIC_GROUP_6 = UUID.fromString("1d9cd7c6-f0c7-4dd9-b54b-3e980901a366");
+    private static final UUID CHARACTERISTIC_GROUP_7 = UUID.fromString("e3cedc31-38d4-42a9-a07f-96678109abec");
+    private static final UUID CHARACTERISTIC_GROUP_8 = UUID.fromString("ddd7cd7d-2fd0-48cc-8b7b-e5aac1e45dcc");
+    private static final UUID CHARACTERISTIC_GROUP_9 = UUID.fromString("f8b5b592-a39f-4034-a65c-19366edac50f");
+    private static final UUID CHARACTERISTIC_GROUP_10 = UUID.fromString("c217c144-166e-4d7b-a834-047a9c4bf690");
+
     private static final UUID CHARACTERISTIC_TRIG_DELAY = UUID.fromString("d4864911-7fa2-4912-8fa6-9ee6cfc6cf8a");
     private static final UUID CHARACTERISTIC_AUTO_STOPRECORDING = UUID.fromString("8bbb54e6-b6a9-493b-9736-a2b7c2283388");
 
@@ -174,6 +188,42 @@ public class BaseBluetoothPeripheral {
      */
     public void readGroupName(OnCharacteristicReadListener onCharacteristicReadListener) {
         BlueteethUtils.read(CHARACTERISTIC_GROUP_1, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName2(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_2, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName3(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_3, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName4(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_4, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName5(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_5, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName6(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_6, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName7(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_7, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName8(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_8, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName9(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_9, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
+    }
+
+    public void readGroupName10(OnCharacteristicReadListener onCharacteristicReadListener) {
+        BlueteethUtils.read(CHARACTERISTIC_GROUP_10, CUSTOM_SERVICE_INFORMATION, mPeripheral, onCharacteristicReadListener);
     }
 
 

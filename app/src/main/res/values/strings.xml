@@ -26,6 +26,15 @@ s
     <string name="extra_mac_address">com.robotpajamas.android.ble113_ota.mac_address</string>
 
     <string name="group_name1"> Group Name 1: %s</string>
+    <string name="group_name2"> Group Name 2: %s</string>
+    <string name="group_name3"> Group Name 3: %s</string>
+    <string name="group_name4"> Group Name 4: %s</string>
+    <string name="group_name5"> Group Name 5: %s</string>
+    <string name="group_name6"> Group Name 6: %s</string>
+    <string name="group_name7"> Group Name 7: %s</string>
+    <string name="group_name8"> Group Name 8: %s</string>
+    <string name="group_name9"> Group Name 9: %s</string>
+    <string name="group_name10"> Group Name 10: %s</string>
 
     <!--String Relative to Setting -->
     <string name="prompt_GroupName">Set Group Name</string>

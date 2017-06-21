@@ -54,7 +54,7 @@ android:layout_height="match_parent"
             android:text="@string/group_name1" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/editText1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="12"
@@ -85,17 +85,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 2 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name2" />
 
         <EditText
             android:id="@+id/editText2"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname2"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -107,17 +124,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 3 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name3" />
 
         <EditText
             android:id="@+id/editText3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname3"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -129,17 +163,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 4 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name4" />
 
         <EditText
             android:id="@+id/editText4"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname4"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -151,17 +202,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 5 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name5" />
 
         <EditText
             android:id="@+id/editText5"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname5"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -170,19 +238,37 @@ android:layout_height="match_parent"
         android:layout_marginTop="10dp"
         android:weightSum="1"
         android:orientation="horizontal">
+
         <TextView
             android:id="@+id/textView6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 6 : " />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name6" />
 
         <EditText
             android:id="@+id/editText6"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname6"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
@@ -195,17 +281,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView7"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 7 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name7" />
 
         <EditText
             android:id="@+id/editText7"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname7"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -217,17 +320,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView8"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 8 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name8" />
 
         <EditText
             android:id="@+id/editText8"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname8"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -239,17 +359,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView9"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 9 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name9" />
 
         <EditText
             android:id="@+id/editText9"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname9"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
@@ -261,17 +398,34 @@ android:layout_height="match_parent"
 
         <TextView
             android:id="@+id/textView10"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Group Name 10 :" />
+            android:padding="5sp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:layout_weight="0.5"
+            android:text="@string/group_name10" />
 
         <EditText
             android:id="@+id/editText10"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name" />
+            android:ems="12"
+            android:layout_weight="0.4"
+            android:hint="For ex: Getac "
+            android:inputType="text"
+            android:textSize="14dp" />
+
+        <Button
+            android:id="@+id/setgroupname10"
+            android:layout_width="0dp"
+            android:layout_height="32dp"
+            android:layout_weight="0.1"
+            android:background="#9f9f9f"
+            android:layout_marginRight="10dp"
+            android:text="OK"
+            android:textColor="#ffffff"
+            android:textStyle="bold" />
     </LinearLayout>
 
 

@@ -98,9 +98,6 @@ public class OtaActivity extends Activity {
     @Bind(R.id.setstoppin)
     Button mSetStop;
 
-    @Bind(R.id.textview_GroupName)
-    TextView mGroupName;
-
 
     @OnClick(R.id.setrecpin)
     void setRecPin(){
@@ -125,15 +122,6 @@ public class OtaActivity extends Activity {
 
     }
 
-    @OnClick(R.id.setgroupname)
-    void setGroupName(){
-        EditText ed = (EditText) findViewById(R.id.edittext_Groupname);
-        String input = ed.getText().toString();
-        //byte[] value1 = StringDataToByte(input);
-        ed.setText(input);
-
-        mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
-    }
 
     @OnClick(R.id.switch_rec)
     void autostop_switch(){
@@ -182,7 +170,7 @@ public class OtaActivity extends Activity {
         final Intent intent = new Intent(this, GroupNameActivity.class);
         intent.putExtra(getString(R.string.extra_mac_address), mBluegigaPeripheral.getMacAddress());
         startActivity(intent);
-        
+
     }
     /*
 
@@ -293,12 +281,6 @@ public class OtaActivity extends Activity {
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
-                    mBluegigaPeripheral.readGroupName(((response3, data3) -> {
-                        if (response !=BlueteethResponse.NO_ERROR) {
-                            return;
-                        }
-                        runOnUiThread(() -> mGroupName.setText(String.format(getString(R.string.group_name), ByteString.of(data3, 0, data3.length).utf8())));
-
                         //ReadGPINstop
                         mBluegigaPeripheral.readGPINstop(((response5, data5) -> {
                             if (response !=BlueteethResponse.NO_ERROR) {
@@ -359,7 +341,7 @@ public class OtaActivity extends Activity {
                             //----- Transmit Duration stop -----
                         }));
                         // ----- Read GPIN stop
-                    }));
+                    //}));
                     // ---- Read Group Name
                 });
 
