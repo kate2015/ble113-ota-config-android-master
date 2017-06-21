@@ -25,6 +25,8 @@ s
     <string name="swipe_to_start_scanning">Swipe to start scanning</string>
     <string name="extra_mac_address">com.robotpajamas.android.ble113_ota.mac_address</string>
 
+    <string name="group_name1"> Group Name 1: %s</string>
+
     <!--String Relative to Setting -->
     <string name="prompt_GroupName">Set Group Name</string>
 

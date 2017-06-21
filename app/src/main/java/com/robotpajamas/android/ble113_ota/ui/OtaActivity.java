@@ -27,6 +27,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.robotpajamas.android.ble113_ota.R;
+import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethDevice;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethUtils;
 import com.robotpajamas.android.ble113_ota.peripherals.BluegigaPeripheral;
 import com.robotpajamas.android.ble113_ota.blueteeth.BlueteethManager;
@@ -178,17 +179,10 @@ public class OtaActivity extends Activity {
     void JumptoGroupNamePage() {
         ImageButton j = (ImageButton) findViewById(R.id.GP_Button);
 
-        Intent i = new Intent();
-        i.setClass(OtaActivity.this, GroupNameActivity.class);
-
-        //new bundle , pass data to GroupnameActivity
-        //Bundle b = new Bundle();
-        //b.putAll(mBluegigaPeripheral);
-
-
-        startActivity(i);
-        //this.finish();
-        //overridePendingTransition(R.transition.activity);
+        final Intent intent = new Intent(this, GroupNameActivity.class);
+        intent.putExtra(getString(R.string.extra_mac_address), mBluegigaPeripheral.getMacAddress());
+        startActivity(intent);
+        
     }
     /*
 
