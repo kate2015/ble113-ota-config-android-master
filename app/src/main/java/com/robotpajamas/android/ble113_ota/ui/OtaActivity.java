@@ -60,6 +60,9 @@ public class OtaActivity extends Activity {
     private int mTotalNumberOfPackets = 0;
     private int mCurrentPacket = 0;
 
+    static int[] pins_rec = new int[2];
+    static int[] pins_stop = new int[2];
+
     @Bind(R.id.progressbar)
     ProgressBar mProgressBar;
 
@@ -104,21 +107,34 @@ public class OtaActivity extends Activity {
         EditText ed = (EditText) findViewById(R.id.WireAndPin);
         String input = ed.getText().toString();
         byte[] value1 = StringDataToByte(input);
-        String data = BitToInt(value1);
-        ed.setText(data);
-        mBluegigaPeripheral.setRecPin(value1,response -> {});
+        String data = BitToInt(value1, 0);
+
+        if (data == null){
+
+            Timber.d("Same data");
+
+        }else {
+
+            ed.setText(data);
+            mBluegigaPeripheral.setRecPin(value1,response -> {});
+        }
 
     }
 
     @OnClick(R.id.setstoppin)
     void setStopRecPin(){
-        //mBluegigaPeripheral.SetStopPin();
+
         EditText ed = (EditText) findViewById(R.id.RecStopPin);
         String input = ed.getText().toString();
         byte[] value1 = StringDataToByte(input);
-        String data = BitToInt(value1);
-        ed.setText(data);
-        mBluegigaPeripheral.SetStopPin(value1,response -> {});
+        String data = BitToInt(value1, 2);
+
+        if (data == null){
+            Timber.d("same data2");
+        }else{
+            ed.setText(data);
+            mBluegigaPeripheral.SetStopPin(value1,response -> {});
+        }
 
     }
 
@@ -281,13 +297,13 @@ public class OtaActivity extends Activity {
                     //runOnUiThread(() -> mTXpower.setText(spinnerTx.getSelectedItem().toString()));
 
                     //----- Read Group Name ------
-                        //ReadGPINstop
-                        mBluegigaPeripheral.readGPINstop(((response5, data5) -> {
+                        //Read Rec Pins
+                        mBluegigaPeripheral.readWireandPin(((response5, data5) -> {
                             if (response !=BlueteethResponse.NO_ERROR) {
                                 return;
                             }
                             //runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length))));
-                            runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin) , BitToInt(data5))));
+                            runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data5, 1))));
 
                             //-- Transmit Duration -----
                             mBluegigaPeripheral.readTransmit(((response6, data6) -> {
@@ -296,13 +312,13 @@ public class OtaActivity extends Activity {
                                 }
                                 runOnUiThread(() -> mTransmit.setText(String.format(getString(R.string.transmit_duration), transmitime(data6))));
 
-                                // Read Wire And Pin
-                                mBluegigaPeripheral.readWireandPin(((respons7, data7) -> {
+                                // Read Stop rec
+                                mBluegigaPeripheral.readGPINstop(((respons7, data7) -> {
                                     if (response !=BlueteethResponse.NO_ERROR) {
                                         return;
                                     }
 
-                                    runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data7))));
+                                    runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin) , BitToInt(data7, 3))));
 
                                     // Read MBSN
                                     mBluegigaPeripheral.readMBSN(((respons8, data8) -> {
@@ -372,10 +388,11 @@ public class OtaActivity extends Activity {
         return bData;
     }
 
-    private String BitToInt(byte[] data)
+    private String BitToInt(byte[] data, int flag)
     {
         //int[] iData = new int[8];
-        int id = 0;
+        int id = 0, j = 0;
+
         String str_ids = "";
         for(int i = 0; i < 8; i++)
         {
@@ -384,11 +401,53 @@ public class OtaActivity extends Activity {
                 if(id > 0)
                     str_ids += ",";
                 id++;
+
+                if (i != 0 ){
+                    switch (flag)
+                    {
+                        case 0 : //set rec
+                            for (int k = 0; k < pins_stop.length; k++) {
+                                if (pins_stop[k] == i){
+                                    Timber.d("the same");
+                                    Toast.makeText(OtaActivity.this, "You Set Rec pin : " + i +"same as stop pin , please change it!!!", Toast.LENGTH_SHORT).show();
+                                    return null;
+                                }
+                            }
+                            pins_rec[j] = i ;
+                            j++;
+                            break;
+                        case 1 : //read rec
+
+                            pins_rec[j] = i ;
+                            j++;
+
+                            break;
+                        case 2: //set Stop
+                            for (int k = 0; k < pins_rec.length; k++) {
+                                if (pins_rec[k] == i){
+                                    Timber.d("the same");
+                                    Toast.makeText(OtaActivity.this, "You Set Stop pin : " + i +"same as Rec pin, please change it!!!", Toast.LENGTH_SHORT).show();
+                                    return null;
+                                }
+                            }
+                            pins_stop[j] = i ;
+                            j++;
+                            break;
+                        case 3: //read stop
+
+                            pins_stop[j] = i ;
+                            j++;
+                            break;
+                        default:
+                            Timber.d("Wrong number");
+                            return null;
+                    }
+                }
                 str_ids += Integer.toString(i);
             }
 
-
         }
+
         Timber.d("nitaa bit to string %s",str_ids );
 
 
