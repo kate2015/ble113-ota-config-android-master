@@ -133,7 +133,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TriggerBox V1.0.2"
+                android:text="TriggerBox V1.0.3"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:textSize="16dp"
