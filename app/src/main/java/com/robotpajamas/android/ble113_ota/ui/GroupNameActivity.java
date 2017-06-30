@@ -69,6 +69,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName(input.getBytes(),response -> {});
+        mGroupName.setText(String.format(getString(R.string.group_name1),input));
     }
 
     @OnClick(R.id.setgroupname2)
@@ -79,6 +80,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName2(input.getBytes(),response -> {});
+        mGroupName2.setText(String.format(getString(R.string.group_name2),input));
     }
 
     @OnClick(R.id.setgroupname3)
@@ -89,6 +91,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName3(input.getBytes(),response -> {});
+        mGroupName3.setText(String.format(getString(R.string.group_name3),input));
     }
 
     @OnClick(R.id.setgroupname4)
@@ -99,6 +102,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName4(input.getBytes(),response -> {});
+        mGroupName4.setText(String.format(getString(R.string.group_name4),input));
     }
 
     @OnClick(R.id.setgroupname5)
@@ -109,6 +113,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName5(input.getBytes(),response -> {});
+        mGroupName5.setText(String.format(getString(R.string.group_name5),input));
     }
 
     @OnClick(R.id.setgroupname6)
@@ -119,6 +124,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName6(input.getBytes(),response -> {});
+        mGroupName6.setText(String.format(getString(R.string.group_name6),input));
     }
 
     @OnClick(R.id.setgroupname7)
@@ -129,6 +135,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName7(input.getBytes(),response -> {});
+        mGroupName7.setText(String.format(getString(R.string.group_name7),input));
     }
 
     @OnClick(R.id.setgroupname8)
@@ -139,6 +146,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName8(input.getBytes(),response -> {});
+        mGroupName8.setText(String.format(getString(R.string.group_name8),input));
     }
 
     @OnClick(R.id.setgroupname9)
@@ -149,6 +157,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName9(input.getBytes(),response -> {});
+        mGroupName9.setText(String.format(getString(R.string.group_name9),input));
     }
 
     @OnClick(R.id.setgroupname10)
@@ -159,6 +168,7 @@ public class GroupNameActivity extends Activity {
         ed.setText(input);
 
         mBluegigaPeripheral.setGroupName10(input.getBytes(),response -> {});
+        mGroupName10.setText(String.format(getString(R.string.group_name10),input));
     }
 
     @Override

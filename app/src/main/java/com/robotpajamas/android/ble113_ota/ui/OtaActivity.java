@@ -62,6 +62,7 @@ public class OtaActivity extends Activity {
 
     static int[] pins_rec = new int[2];
     static int[] pins_stop = new int[2];
+    static String r_tx = "";
 
     @Bind(R.id.progressbar)
     ProgressBar mProgressBar;
@@ -117,6 +118,7 @@ public class OtaActivity extends Activity {
 
             ed.setText(data);
             mBluegigaPeripheral.setRecPin(value1,response -> {});
+            mWireAndPin.setText(String.format(getString(R.string.WireAndPin), data));
         }
 
     }
@@ -134,6 +136,7 @@ public class OtaActivity extends Activity {
         }else{
             ed.setText(data);
             mBluegigaPeripheral.SetStopPin(value1,response -> {});
+            mRecStopPin.setText(String.format(getString(R.string.RecStopPin), data));
         }
 
     }
@@ -302,7 +305,6 @@ public class OtaActivity extends Activity {
                             if (response !=BlueteethResponse.NO_ERROR) {
                                 return;
                             }
-                            //runOnUiThread(() -> mRecStopPin.setText(String.format(getString(R.string.RecStopPin), ByteString.of(data5, 0, data5.length))));
                             runOnUiThread(() -> mWireAndPin.setText(String.format(getString(R.string.WireAndPin) , BitToInt(data5, 1))));
 
                             //-- Transmit Duration -----
@@ -486,13 +488,13 @@ public class OtaActivity extends Activity {
     }
 
     private String txpowertodbm(byte[] data){
-        String value = "";
+
 
         float power = (float) (data[1]) /10;
 
-        value = Float.toString(power)  + " dbm";
+        r_tx = Float.toString(power)  + " dbm";
 
-        return value;
+        return r_tx;
     }
 
     private byte[] hex2Byte(String hexString) {
@@ -650,6 +652,10 @@ public class OtaActivity extends Activity {
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }
 
+    // more then one spinner on the page.
+
+
+
     //Spinner for Txpower setting
     void setspinnerTX(){
         Spinner spinnerTx = (Spinner)findViewById(R.id.set_txpower);
@@ -665,14 +671,23 @@ public class OtaActivity extends Activity {
 
         spinnerTx.setAdapter(txpowerList);
 
+
         spinnerTx.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        //spinnerTx.setOnItemSelectedListener(new SpinnerSelectedListener(r_tx) {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String selected_item = spinnerTx.getSelectedItem().toString();
+                if (r_tx == (String) spinnerTx.getItemAtPosition(position)){
+                    return; //so nothing
+                }else{
+                    String selected_item = spinnerTx.getSelectedItem().toString();
 
-                dbmtotxpower(selected_item);
+                    dbmtotxpower(selected_item);
+                    //mTXpower.setText(selected_item);
+                    mTXpower.setText(String.format("Tx Power: %s",selected_item));
 
-                //Toast.makeText(OtaActivity.this, "You Set TX Power :" + txpower[position], Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(OtaActivity.this, "You Set TX Power :" + txpower[position], Toast.LENGTH_SHORT).show();
+                }
+
             }
 
             @Override
@@ -698,6 +713,7 @@ public class OtaActivity extends Activity {
                 String Selected_item = spinnerDelay.getSelectedItem().toString();
 
                 timetotrigdelay(Selected_item);
+                mTrigDelay.setText(String.format("Trig Delay:%s", Selected_item));
 
                 //Toast.makeText(OtaActivity.this, "You Set Trig Delay :" + trigdelay[position], Toast.LENGTH_SHORT).show();
             }
@@ -726,6 +742,7 @@ public class OtaActivity extends Activity {
                 String Selected_item = spinnerTransmit.getSelectedItem().toString();
 
                 timetoTransmit(Selected_item);
+                mTransmit.setText(String.format("Transmit Duration:%s", Selected_item));
 
                 //Toast.makeText(OtaActivity.this, "You Set Transmit Duration :" + transmit[position], Toast.LENGTH_SHORT).show();
             }
