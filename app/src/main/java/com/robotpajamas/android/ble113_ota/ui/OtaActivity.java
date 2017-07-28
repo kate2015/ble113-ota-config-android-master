@@ -38,6 +38,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InterruptedIOException;
+import java.nio.charset.Charset;
 
 import javax.xml.datatype.DatatypeFactory;
 
@@ -530,7 +531,8 @@ public class OtaActivity extends Activity {
             }else if (c >= 'a' && c <= 'f') {
                 c -= 'a';
             }
-            rc[rc_id++] = (byte) c;
+
+            rc[rc_id++] = (byte) c ;
         }
         return rc;
 
@@ -538,6 +540,19 @@ public class OtaActivity extends Activity {
         //for(int i = strHex.length() - 1; i >= 0; i--)
     }
 
+    private byte[] string2byte(String str){
+
+        if (str == null) {
+            return null;
+        }
+
+        int data = Integer.parseInt(str);
+        byte[] byteArray = new byte[2];
+        byteArray[0] = 0;
+        byteArray[1] = (byte)data;
+        return byteArray;
+
+    }
 
 
     private String trigdelay(byte[] data){
@@ -581,36 +596,43 @@ public class OtaActivity extends Activity {
 
     }
 
-    private String transmitime(byte[] data){
+    private String transmitime(byte[] byteArray){
 
         String time = "";
         String transmit_dura = "";
 
-        time = Integer.toString(data[0]*10 + data[1]);
+
+        if (byteArray == null) {
+            return null;
+        }
+        //time = new String(byteArray);
+        time = Integer.toString(byteArray[0] + byteArray[1]);
 
         switch (time)
         {
             case "1":
                 transmit_dura = "30 secs";
                 break;
-            case "20":
+            case "2":
                 transmit_dura = "1 mins";
                 break;
-            case "40":
+            case "4":
                 transmit_dura = "2 mins";
                 break;
-            case "01":
+            case "10":
                 transmit_dura = "5 mins";
                 break;
-            case "2":
+            case "20":
                 transmit_dura = "10 mins";
                 break;
-            case "3":
+            case "30":
                 transmit_dura = "15 mins";
                 break;
-            case "4":
+            case "40":
                 transmit_dura = "20 mins";
                 break;
+            default:
+                transmit_dura = "30 secs";
         }
         return transmit_dura;
 
@@ -621,6 +643,7 @@ public class OtaActivity extends Activity {
     private void timetoTransmit(String Selected_item){
 
         String time = "";
+        //byte[] time = new byte[Selected_item.length()];
         switch (Selected_item){
             case "30 secs":
                 time = "1";
@@ -647,7 +670,7 @@ public class OtaActivity extends Activity {
                 time = "1";
         }
 
-        byte[] bdata = StrHex2ByteArry(time);
+        byte[] bdata = string2byte(time);
 
         mBluegigaPeripheral.setTransmitTime(bdata, response -> {});
     }

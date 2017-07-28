@@ -84,7 +84,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:src="@mipmap/bwc"
+                android:src="@mipmap/getac"
                 android:background="@android:color/transparent"
                 android:layout_gravity="center_vertical"
                 android:scaleType="fitCenter"
@@ -133,7 +133,7 @@ tools:context="com.robotpajamas.android.ble113_ota.ui.MainActivity">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TriggerBox V1.0.3"
+                android:text="TriggerBox V1.0.4"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:textSize="16dp"
